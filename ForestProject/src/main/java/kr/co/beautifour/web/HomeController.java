@@ -1,4 +1,4 @@
-package kr.co.beautifour;
+package kr.co.beautifour.web;
 
 
 import java.sql.Connection;
@@ -83,18 +83,4 @@ public class HomeController {
 	        return "home";
 	    }
 	 
-	 @Resource(name="sampleService")
-		private SampleService sampleService;
-		
-		@RequestMapping(value = "/sample", method = RequestMethod.GET)
-		public String sampleControl() {
-			logger.info("sample 기동 완료");
-			try {
-				logger.info(sampleService.selectSampleData());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return "sample";
-		}
 }
