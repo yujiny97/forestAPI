@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,4 +82,19 @@ public class HomeController {
 	        
 	        return "home";
 	    }
+	 
+	 @Resource(name="sampleService")
+		private SampleService sampleService;
+		
+		@RequestMapping(value = "/sample", method = RequestMethod.GET)
+		public String sampleControl() {
+			logger.info("sample 기동 완료");
+			try {
+				logger.info(sampleService.selectSampleData());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "sample";
+		}
 }

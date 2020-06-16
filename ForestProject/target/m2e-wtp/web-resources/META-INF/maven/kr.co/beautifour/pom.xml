@@ -62,14 +62,13 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-test</artifactId>
 		    <version>${org.springframework-version}</version>
-		    <scope>test</scope>
 		</dependency>
 		 
 		<!-- spring-jdbc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jdbc</artifactId>
-		    <version>5.2.5.RELEASE</version>
+		    <version>${org.springframework-version}</version>
 		</dependency>
 				
 		
