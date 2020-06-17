@@ -7,6 +7,7 @@ import kr.co.beautifour.domain.PlantsVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import java.util.List;
 
 @Controller
 public class TestDao {
@@ -15,9 +16,12 @@ public class TestDao {
     private PlantsDao dao;
    
     @RequestMapping(value = "/testDAO", method = RequestMethod.GET)
-    public void testDAO(){
+    public String testDAO(){
         PlantsVO vo = new PlantsVO();
-        
-        System.out.println(dao.selectPlants(vo).toString());
+        List<PlantsVO> result =  dao.selectPlants(vo);
+        for(int i=0;i<result.size();i++) {
+        	System.out.println(result.get(i).getpNum()+"번째, "+result.get(i).getfskName());
+        }
+        return "testDAO";
     }
 }
