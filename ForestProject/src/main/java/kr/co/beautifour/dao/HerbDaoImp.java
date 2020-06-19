@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.beautifour.domain.HerbContVO;
 import kr.co.beautifour.domain.HerbVO;
+import kr.co.beautifour.domain.DiseaseVO;
 
-@Repository //DAO¶ó°í ¸í½Ã (DAO¸¦ ½ºÇÁ¸µ¿¡¼­ ÀÎ½Ä½ÃÄÑÁÜ)
+@Repository //DAOï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (DAOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½)
 public class HerbDaoImp implements HerbDao{
 	
-	 @Inject // ÀÇÁ¸°ü°è¸¦ ÀÚµ¿À¸·Î ¿¬°á(JAVA¿¡¼­ Á¦°ø) ==@autowired (Spring¿¡¼­ Á¦°ø)
+	 @Inject // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¸¦ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(JAVAï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ==@autowired (Springï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 	 private SqlSession sqlSession;
 	 
 	private static final String namespace = "kr.co.beautifour.PlantsMapper";
@@ -28,6 +29,12 @@ public class HerbDaoImp implements HerbDao{
 	public List<HerbContVO> selectHerbsCountry(HerbContVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace+".selectHerbsCountry", vo);
+	}
+	
+	@Override
+	public List<DiseaseVO> selectDisease(String search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".selectDisease", search);
 	}
 
 

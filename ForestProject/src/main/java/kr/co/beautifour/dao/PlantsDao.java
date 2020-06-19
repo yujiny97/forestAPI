@@ -6,4 +6,5 @@ import kr.co.beautifour.domain.PlantsVO;
 
 public interface PlantsDao {
 	public List<PlantsVO> selectPlants(PlantsVO vo);
+	public List<PlantsVO> selectsearchPlants(String search);
 }

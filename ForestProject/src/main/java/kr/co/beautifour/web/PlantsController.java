@@ -7,11 +7,14 @@ import kr.co.beautifour.dao.PlantsDao;
 import kr.co.beautifour.domain.HerbContVO;
 import kr.co.beautifour.domain.HerbVO;
 import kr.co.beautifour.domain.PlantsVO;
+import kr.co.beautifour.domain.DiseaseVO;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PlantsController {
@@ -51,4 +54,30 @@ public class PlantsController {
         }
         return result;
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/getPlantsbyName", method = RequestMethod.GET)
+    public List<PlantsVO> getPlantsbyName(HttpServletRequest request){
+        
+        String search = request.getParameter("search");
+         List<PlantsVO> result =  dao.selectsearchPlants(search);
+         
+        return result;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/getDList", method = RequestMethod.GET)
+    public List<DiseaseVO> getDList(HttpServletRequest request){
+        String search = request.getParameter("search");
+    	List<DiseaseVO> result =  hdao.selectDisease(search);
+        return result;
+    }
+    
+//    @ResponseBody
+//    @RequestMapping(value = "/getPlantsbyDisease", method = RequestMethod.GET)
+//    public List<PlantsVO> getPlantsbyDisease(HttpServletRequest request){
+//        
+//        return result;
+//    }
+//    
 }
