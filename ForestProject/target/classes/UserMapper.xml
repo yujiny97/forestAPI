@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="kr.co.beautifour.UserMapper">
+
+    <select id="selectUser" resultType= "kr.co.beautifour.domain.UserVO">
+        select * from UserINF
+    </select>
+
+	<insert id="insertUser">
+		insert into UserINF (UID,PW,UName,gender,age) 
+		values(#{UID},password(#{PW}),#{UName},#{gender},#{age})
+	</insert>
+</mapper>
