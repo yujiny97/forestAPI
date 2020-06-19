@@ -5,13 +5,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="kr.co.beautifour.UserMapper">
-
+<!-- 모든 user 찾기 -> 이거는 나중에 지워야함 -->
     <select id="selectUser" resultType= "kr.co.beautifour.domain.UserVO">
         select * from UserINF
     </select>
-
+<!-- 새로운 유저 insert하기 -->
 	<insert id="insertUser">
 		insert into UserINF (UID,PW,UName,gender,age) 
 		values(#{UID},password(#{PW}),#{UName},#{gender},#{age})
 	</insert>
+	
+	<!--도감 insert 하기  -->
+	<insert id="insertMybook">
+		insert into MyBook (bookid,UID,story,picadd,ForT,writeD) 
+		values((select if(count(m.bookid)=0,1,MAX(m.bookid)+1) 
+		from MyBook m where m.UID=#{uid}),
+		#{uid},
+		#{story},
+		#{picadd},
+		#{forT},
+		date_format(NOW(),'%Y-%m-%d %H:%i:%s'));
+	</insert>
+	
 </mapper>

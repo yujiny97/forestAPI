@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 
+import kr.co.beautifour.domain.MybookVO;
 import kr.co.beautifour.domain.UserVO;
 
 @Repository
@@ -28,6 +29,13 @@ public class UserDaoImp implements UserDao{
 		// TODO Auto-generated method stub
 		System.out.println("insertUser OK");
 		sqlSession.insert(namespace+".insertUser", vo);
+	}
+
+	@Override
+	public void insertMybook(MybookVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("insertMybook OK");
+		sqlSession.insert(namespace+".insertMybook", vo);
 	}
 
 
