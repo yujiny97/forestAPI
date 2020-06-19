@@ -8,10 +8,10 @@ import kr.co.beautifour.domain.PlantsVO;
 import org.springframework.stereotype.Repository;
 
 
-@Repository //DAO¶ó°í ¸í½Ã (DAO¸¦ ½ºÇÁ¸µ¿¡¼­ ÀÎ½Ä½ÃÄÑÁÜ)
+@Repository //DAOï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (DAOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½)
 public class PlantsDaoImp implements PlantsDao {
 
-    @Inject // ÀÇÁ¸°ü°è¸¦ ÀÚµ¿À¸·Î ¿¬°á(JAVA¿¡¼­ Á¦°ø) ==@autowired (Spring¿¡¼­ Á¦°ø)
+    @Inject // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¸¦ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(JAVAï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ==@autowired (Springï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     private SqlSession sqlSession;
    
     private static final String namespace = "kr.co.beautifour.PlantsMapper";
@@ -19,7 +19,11 @@ public class PlantsDaoImp implements PlantsDao {
     @Override
     public List<PlantsVO> selectPlants(PlantsVO vo) {
         return sqlSession.selectList(namespace+".selectPlants", vo);
-		
+    }
+    
+    @Override
+    public List<PlantsVO> selectsearchPlants(String search) {
+    	return sqlSession.selectList(namespace+".selectsearchPlants", search);
     }
    
 }

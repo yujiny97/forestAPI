@@ -12,12 +12,13 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+   <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
     <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://3.23.86.254:3306/flowerDB?useSSL=false&amp;serverTimezone=UTC" />
+    <property name="url" value="jdbc:mysql://3.23.86.254:3306/flowerDB?useSSL=false&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8" />
     <property name="username" value="remoteDB"></property>
     <property name="password" value="anjajrdmfRk1"></property>
-	</bean>
+   </bean>
+
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
     <context:component-scan base-package="kr.co.beautifour">

@@ -10,6 +10,9 @@ public class PlantsVO {
     private String fsGbn;
     private String fsClassname;
     private int isHerb;
+    private int s_Month;
+    private String Season;
+    private String hName;
    
     public int getpNum() {
         return pNum;
@@ -72,6 +75,27 @@ public class PlantsVO {
     }
     public void setisHerb(int isHerb) {
         this.isHerb = isHerb;
+    }
+    
+    public int gets_Month() {
+        return s_Month;
+    }
+    public void sets_Month(int s_Month) {
+        this.s_Month = s_Month;
+    }
+    
+    public String getSeason() {
+        return Season;
+    }
+    public void setSeason(String Season) {
+        this.Season = Season;
+    }
+    
+    public String gethName() {
+        return hName;
+    }
+    public void sethName(String hName) {
+        this.hName = hName;
     }
     
     @Override

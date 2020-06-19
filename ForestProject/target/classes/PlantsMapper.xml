@@ -8,17 +8,28 @@
 <mapper namespace="kr.co.beautifour.PlantsMapper">
 
     <select id="selectPlants" resultType= "kr.co.beautifour.domain.PlantsVO">
-        select * from Plants
+        SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1, fsImg_2, fsGbn, fsClassname, isHerb, s_Month, Season, hName FROM Plants natural join s_When natural join Season natural join Livein natural join Habitat 
+	where s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month and Plants.pNum = Livein.pNum and Livein.hid = Habitat.hid;
+
     </select>
     
     <select id="selectHerbs" resultType= "kr.co.beautifour.domain.HerbVO">
-        select HrbId, HrbName, mng, caution, internal, external, fsImg_1, fsImg_2 from Herb LEFT OUTER join InternalC on Herb.inid=InternalC.inid LEFT OUTER join ExternalC on Herb.exid=ExternalC.exid INNER JOIN Plants ON Plants.pNum=Herb.pNum 
+    	select HrbId, HrbName, mng, caution, internal, external, fsImg_1, fsImg_2 from Herb LEFT OUTER join InternalC on Herb.inid=InternalC.inid LEFT OUTER join ExternalC on Herb.exid=ExternalC.exid INNER JOIN Plants ON Plants.pNum=Herb.pNum
     </select>
     
     <select id="selectHerbsCountry" resultType= "kr.co.beautifour.domain.HerbContVO">
         select Herb.HrbId, cName From Country, Cont, Herb where Country.cId=Cont.Cid and Herb.HrbID= Cont.HrbID ORDER BY Herb.HrbID
     </select>
     
+    <select id="selectsearchPlants" parameterType="string" resultType="kr.co.beautifour.domain.PlantsVO">
+    	SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1, fsImg_2, fsGbn, fsClassname, isHerb, s_Month, Season, hName FROM Plants natural join s_When natural join Season natural join Livein natural join Habitat WHERE fskName Like CONCAT('%',#{search},'%')
+    	 and s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month and Plants.pNum = Livein.pNum and Livein.hid = Habitat.hid
+    </select>
+    
+    <select id="selectDisease" parameterType="string" resultType= "kr.co.beautifour.domain.DiseaseVO">
+    	select * from DiseaseINF WHERE DName Like CONCAT('%',#{search},'%')
+    </select>
+   
 
 </mapper>
 
