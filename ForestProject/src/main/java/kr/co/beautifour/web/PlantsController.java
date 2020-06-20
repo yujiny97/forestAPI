@@ -7,6 +7,9 @@ import kr.co.beautifour.dao.PlantsDao;
 import kr.co.beautifour.domain.HerbContVO;
 import kr.co.beautifour.domain.HerbVO;
 import kr.co.beautifour.domain.PlantsVO;
+import kr.co.beautifour.domain.SelectHerbByDiseaseVO;
+import kr.co.beautifour.domain.TherapyVO;
+import kr.co.beautifour.domain.AllHerbVO;
 import kr.co.beautifour.domain.DiseaseVO;
 
 import org.springframework.stereotype.Controller;
@@ -21,40 +24,63 @@ public class PlantsController {
    
     @Inject
     private PlantsDao dao;
-   
-    @ResponseBody
-    @RequestMapping(value = "/testDAO", method = RequestMethod.GET)
-    public List<PlantsVO> testDAO(){
-        PlantsVO vo = new PlantsVO();
-         List<PlantsVO> result =  dao.selectPlants(vo);    
-        return result;
-    }
     
     @Inject
     private HerbDao hdao;
-   
+    
+    //전체 도감목록 보여주기
     @ResponseBody
-    @RequestMapping(value = "/herbDAO", method = RequestMethod.GET)
-    public List<HerbVO> herbDAO(){
-        HerbVO vo = new HerbVO();
-         List<HerbVO> result =  hdao.selectHerbs(vo);
-         HerbContVO vo1 = new HerbContVO();
-         List<HerbContVO> result1 = hdao.selectHerbsCountry(vo1);
-         for(int i=0;i<result.size();i++) {
-        	 for(int j=0;j<result1.size();j++) {
-        		 if(result.get(i).getHrbId()==result1.get(j).getHrbId()) {
-        			 result.get(i).setcountry(result1.get(j).getCountry());
-        		 }
-        		 else {
-        			 if(result.get(i).getHrbId()<result1.get(j).getHrbId()) break;
-        			 else continue;
-        		 }
-        	 }
-        	 
-        }
+    @RequestMapping(value = "/PlantInfo/getAllPlants", method = RequestMethod.GET)
+    public List<PlantsVO> getAllPlants(){
+    	List<PlantsVO> result =  dao.selectAllPlants();    
         return result;
     }
     
+    //한가지 식물정보 보여주기 - pNum으로 접근
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getPlants", method = RequestMethod.GET)
+    public List<PlantsVO> getPlants(HttpServletRequest request){
+    	int no=0;
+    	//만약 넘겨받은 값이 있다면
+    	if(request.getParameter("pNum")!=null) {
+    		no = Integer.parseInt(request.getParameter("pNum"));
+    	}
+    	
+         List<PlantsVO> result =  dao.selectPlants(no);    
+        return result;
+    }
+    
+    //전체 허브도감목록 보여주기
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getAllHerb", method = RequestMethod.GET)
+    public List<AllHerbVO> getAllHerb(){
+    	List<AllHerbVO> result =  hdao.selectAllHerb();    
+        return result;
+    }
+    
+    //한가지 허브정보 보여주기 - HrbId로 접근
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getHerbs", method = RequestMethod.GET)
+    public HerbVO getHerbs(HttpServletRequest request){
+        int no=0;
+    	//만약 넘겨받은 값이 있다면
+    	if(request.getParameter("HrbId")!=null) {
+    		no = Integer.parseInt(request.getParameter("HrbId"));
+    		
+    	}
+         HerbVO result =  hdao.selectHerbs(no);
+         List<HerbContVO> result1 = hdao.selectHerbsCountry(no);
+         List<TherapyVO> result2 = hdao.selectTherapy(no); 
+         for(int i=0;i<result1.size();i++) {
+        	 result.setcountry(result1.get(i).getCountry());
+         }
+         for(int i=0;i<result2.size();i++) {
+        	 result.setdisease(result2.get(i).getDName());
+         }
+        return result;
+    }
+    
+    //이름으로 식물 검색하기
     @ResponseBody
     @RequestMapping(value = "/getPlantsbyName", method = RequestMethod.GET)
     public List<PlantsVO> getPlantsbyName(HttpServletRequest request){
@@ -65,6 +91,7 @@ public class PlantsController {
         return result;
     }
     
+    //질병 목록 보여주기
     @ResponseBody
     @RequestMapping(value = "/getDList", method = RequestMethod.GET)
     public List<DiseaseVO> getDList(HttpServletRequest request){
@@ -73,11 +100,13 @@ public class PlantsController {
         return result;
     }
     
-//    @ResponseBody
-//    @RequestMapping(value = "/getPlantsbyDisease", method = RequestMethod.GET)
-//    public List<PlantsVO> getPlantsbyDisease(HttpServletRequest request){
-//        
-//        return result;
-//    }
-//    
+    //병이름으로 해당하는 식물 가져오기
+    @ResponseBody
+    @RequestMapping(value = "/getPlantsbyDisease", method = RequestMethod.GET)
+    public List<SelectHerbByDiseaseVO> getPlantsbyDisease(HttpServletRequest request){
+    	String search = request.getParameter("search");
+    	List<SelectHerbByDiseaseVO> result =  hdao.selectHerbsbyDisease(search);
+        return result;
+    }
+    
 }

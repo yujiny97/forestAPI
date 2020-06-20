@@ -13,6 +13,7 @@ public class HerbVO {
 	private String fsImg_1;
     private String fsImg_2;
     private ArrayList<String> country= new ArrayList<String>();
+    private ArrayList<String> disease = new ArrayList<String>();
 	
 	public int getHrbId() {
 		return HrbId;
@@ -75,5 +76,12 @@ public class HerbVO {
     }
     public void setcountry(String country) {
         this.country.add(country);
+    }
+    
+    public ArrayList<String> getdisease() {
+        return disease;
+    }
+    public void setdisease(String disease) {
+        this.disease.add(disease);
     }
 }
