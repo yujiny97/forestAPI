@@ -20,6 +20,11 @@
 		values(#{UID},password(#{PW}),#{UName},#{gender},#{age})
 	</insert>
 	
+<!-- User정보 있는지 확인 -->
+    <select id="Uservalid" resultType= "java.lang.Integer">
+        select COUNT(*) from UserINF where UID="${UID}" and PW=password(#{PW});
+    </select> 
+
 	<!--도감 insert 하기  -->
 	<insert id="insertMybook">
 		insert into MyBook (bookid,UID,story,picadd,ForT,writeD) 

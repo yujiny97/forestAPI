@@ -69,6 +69,12 @@ public class UserDaoImp implements UserDao{
 		
 	}
 
+	@Override
+	public int UserValid(UserVO vo) throws Exception {
+		System.out.println("Uservalid sql 실행전");
+		return sqlSession.selectOne(namespace+".Uservalid", vo);
+	}
+
 
 	
 }

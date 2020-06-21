@@ -65,6 +65,28 @@ public class UserController {
 		return res;
 	}
 	
+	//유저정보 ID로 가져오기
+	@ResponseBody
+	@RequestMapping(value="/User/UserValid",method= RequestMethod.POST)
+	public Map<String,Object> Uservalid(@RequestBody Map<String, Object> param){
+		System.out.println("Controller까지 됨");
+		UserVO vo=new UserVO();
+		vo.setUID((String)(param.get("uid")));
+		vo.setPW((String)(param.get("pw")));
+		int valid=0;
+		Map<String, Object> res=new HashMap();
+		try {
+		valid=dao.UserValid(vo);
+		}catch(Exception ex) {//에러가 발생할 경우
+			res.put("status", "not OK");
+			res.put("message",ex.getMessage());
+			return res;
+		}
+		res.put("status", "OK");
+		res.put("data", valid);//cnt 확인
+		return res;
+	}
+	
 	
 	//유저정보 insert하기
 	@ResponseBody
