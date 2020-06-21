@@ -19,7 +19,7 @@ public class UserDaoImp implements UserDao{
 	private static final String namespace ="kr.co.beautifour.UserMapper";
 	
 	@Override
-	public List<UserVO> selectUser(UserVO vo) {
+	public List<UserVO> selectUser(UserVO vo) throws Exception{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace+".selectUser",vo);
 	}
@@ -36,6 +36,43 @@ public class UserDaoImp implements UserDao{
 		// TODO Auto-generated method stub
 		System.out.println("insertMybook OK");
 		sqlSession.insert(namespace+".insertMybook", vo);
+	}
+
+	@Override
+	public List<UserVO> selectUserByID(UserVO vo) throws Exception{
+		// TODO Auto-generated method stub
+		System.out.println("selectUserBYID까지 됨");
+		return sqlSession.selectList(namespace+".selectUserByID",vo);
+	}
+
+	@Override
+	public List<MybookVO> selectMybook(MybookVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("selectMybookBYID까지 됨");
+		return sqlSession.selectList(namespace+".selectMybookByID",vo);
+		
+	}
+
+	@Override
+	public void deleteMybookbyID(MybookVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("deleteMybookBYID까지 됨");
+		sqlSession.delete(namespace+".deleteMybookByID",vo);
+		
+	}
+	
+	@Override
+	public void updateMybookbyID(MybookVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("updateMybookBYID까지 됨");
+		sqlSession.update(namespace+".updateMybookByID",vo);
+		
+	}
+
+	@Override
+	public int UserValid(UserVO vo) throws Exception {
+		System.out.println("Uservalid sql 실행전");
+		return sqlSession.selectOne(namespace+".Uservalid", vo);
 	}
 
 
