@@ -9,6 +9,11 @@
     <select id="selectUser" resultType= "kr.co.beautifour.domain.UserVO">
         select * from UserINF
     </select>
+<!-- UID로 user 정보 찾기 -->
+    <select id="selectUserByID" resultType= "kr.co.beautifour.domain.UserVO">
+        select * from UserINF where UID="${UID}"
+    </select>    
+
 <!-- 새로운 유저 insert하기 -->
 	<insert id="insertUser">
 		insert into UserINF (UID,PW,UName,gender,age) 
@@ -27,4 +32,18 @@
 		date_format(NOW(),'%Y-%m-%d %H:%i:%s'));
 	</insert>
 	
+<!-- UID로 mybooklist 찾기 -->
+    <select id="selectMybookByID" resultType= "kr.co.beautifour.domain.MybookVO">
+        select * from MyBook where UID="${uid}"
+    </select> 
+	
+<!-- UID와 bookid로 삭제하기 -->
+    <delete id="deleteMybookByID">
+        delete from MyBook where UID="${uid}" and bookid=${bookid}
+    </delete> 
+	
+<!-- UID와 bookid 그리고 새로운 text로 글 수정하기 -->
+    <update id="updateMybookByID">
+        update MyBook set story=#{story},picadd=#{picadd} where UID=#{uid} and bookid=#{bookid};
+    </update>
 </mapper>

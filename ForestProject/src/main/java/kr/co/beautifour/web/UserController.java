@@ -28,11 +28,43 @@ public class UserController {
 	//모든 유저정보 가져오기
 	@ResponseBody
 	@RequestMapping(value="/getAllUser",method= RequestMethod.GET)
-	public List<UserVO> getallUser(){
+	public Map<String,Object> getallUser(){
 		UserVO vo=new UserVO();
-		List<UserVO> res=dao.selectUser(vo);
+		List<UserVO> user=null;
+		Map<String, Object> res=new HashMap();
+		try {
+		user=dao.selectUser(vo);
+		}catch(Exception ex) {//에러가 발생할 경우
+			res.put("status", "not OK");
+			res.put("message",ex.getMessage());
+			return res;
+		}
+		res.put("status", "OK");
+		res.put("data", user);
 		return res;
 	}
+	
+	//유저정보 ID로 가져오기
+	@ResponseBody
+	@RequestMapping(value="/User/getUserByID",method= RequestMethod.POST)
+	public Map<String,Object> getUserByID(@RequestBody Map<String, Object> param){
+		System.out.println("Controller까지 됨");
+		UserVO vo=new UserVO();
+		vo.setUID((String)(param.get("uid")));
+		List<UserVO> user=null;
+		Map<String, Object> res=new HashMap();
+		try {
+		user=dao.selectUserByID(vo);
+		}catch(Exception ex) {//에러가 발생할 경우
+			res.put("status", "not OK");
+			res.put("message",ex.getMessage());
+			return res;
+		}
+		res.put("status", "OK");
+		res.put("data", user);
+		return res;
+	}
+	
 	
 	//유저정보 insert하기
 	@ResponseBody
@@ -51,6 +83,7 @@ public class UserController {
 			dao.insertUser(vo);
 		}catch(Exception ex) {
 			res.put("status", "1062");//중복코드
+			res.put("Exception", ex.getMessage());
 			return res;
 		}
 		res.put("status", "OK");
@@ -74,12 +107,83 @@ public class UserController {
 			dao.insertMybook(vo);
 		}catch(Exception ex) {
 			System.out.println(ex);
-			System.out.println("Controller Exception");
 			res.put("status", "1062");//중복코드
+			res.put("Exception", ex.getMessage());
 			return res;
 		}
 		System.out.println("Controller finished");
 		res.put("status", "OK");
 		return res;
 	}
+	//도감리스트
+		@ResponseBody
+		@RequestMapping(value="/Mybook/getMybooklist",method=RequestMethod.POST)
+		public Map<String,Object> getMybooklist(@RequestBody Map<String,Object> p){
+			System.out.println("Controller start");
+			MybookVO vo=new MybookVO();
+			vo.setUid((String)p.get("uid"));
+			System.out.println("Controller");
+			Map<String, Object> res=new HashMap();
+			List<MybookVO> mybook=null;
+			try {
+				mybook=dao.selectMybook(vo);
+			}catch(Exception ex) {
+				System.out.println(ex);
+				res.put("status", "1062");//중복코드
+				res.put("Exception", ex.getMessage());
+				return res;
+			}
+			System.out.println("Controller finished");
+			res.put("data", mybook);
+			res.put("status", "OK");
+			
+			return res;
+		}
+		//도감 삭제하기
+		@ResponseBody
+		@RequestMapping(value="/Mybook/deleteMybookbyID",method=RequestMethod.DELETE)
+		public Map<String,String> deleteMybookbyID(@RequestBody Map<String,Object> p){
+			System.out.println("Controller start");
+			MybookVO vo=new MybookVO();
+			vo.setBookid(((Integer)p.get("bookid")).intValue());
+			vo.setUid((String)p.get("uid"));
+			System.out.println("Controller");
+			Map<String, String> res=new HashMap();
+			try {
+				dao.deleteMybookbyID(vo);
+			}catch(Exception ex) {
+				System.out.println(ex);
+				res.put("status", "1062");//sql에서 에러남
+				res.put("Exception", ex.getMessage());
+				return res;
+			}
+			System.out.println("Controller finished");
+			res.put("status", "OK");
+			return res;
+		}
+		
+		//도감 수정하기
+		@ResponseBody
+		@RequestMapping(value="/Mybook/UpdatebookbyID",method=RequestMethod.PUT)
+		public Map<String,String> updateMybookbyID(@RequestBody Map<String,Object> p){
+			System.out.println("Controller start");
+			MybookVO vo=new MybookVO();
+			vo.setBookid(((Integer)p.get("bookid")).intValue());
+			vo.setUid((String)p.get("uid"));
+			vo.setUid((String)p.get("story"));
+			vo.setUid((String)p.get("picadd"));
+			System.out.println("Controller");
+			Map<String, String> res=new HashMap();
+			try {
+				dao.updateMybookbyID(vo);
+			}catch(Exception ex) {
+				System.out.println(ex);
+				res.put("status", "1062");//sql에서 에러남
+				res.put("Exception", ex.getMessage());
+				return res;
+			}
+			System.out.println("Controller finished");
+			res.put("status", "OK");
+			return res;
+		}
 }

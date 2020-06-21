@@ -17,7 +17,7 @@
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://3.23.86.254:3306/flowerDB?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;useUnicode=true&amp;characterEncoding=utf8" />
+			value="jdbc:mysql://52.14.219.87:3306/flowerDB?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;useUnicode=true&amp;characterEncoding=utf8" />
 		<property name="username" value="remoteDB"></property>
 		<property name="password" value="anjajrdmfRk1"></property>
 	</bean>
