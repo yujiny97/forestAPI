@@ -83,6 +83,9 @@
 		CONCAT('%',#{search},'%')) ORDER BY DName
 	</select>
 
-
+	<select id="insertDbyID" parameterType="HashMap">
+		INSERT INTO Suffer VALUES (#{uid}, ${did})
+	</select>
+	
 </mapper>
 
