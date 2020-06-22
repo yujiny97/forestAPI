@@ -15,6 +15,8 @@ import kr.co.beautifour.domain.SelectHerbByDiseaseVO;
 import kr.co.beautifour.domain.TherapyVO;
 import kr.co.beautifour.domain.AllHerbVO;
 import kr.co.beautifour.domain.DiseaseVO;
+import kr.co.beautifour.domain.UserHerbVO;
+
 
 @Repository //DAO占쏙옙占� 占쏙옙占� (DAO占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占싸식쏙옙占쏙옙占쏙옙)
 public class HerbDaoImp implements HerbDao{
@@ -68,6 +70,11 @@ public class HerbDaoImp implements HerbDao{
 		user.put("did", did);
 		sqlSession.selectList(namespace+".insertDbyID", user);
 	}
+	
+	@Override
+    public List<UserHerbVO> selectUserHerb(String UID) {
+       return sqlSession.selectList(namespace+".selectUserHerb", UID);
+    }
 
 
 }

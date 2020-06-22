@@ -87,5 +87,19 @@
 		INSERT INTO Suffer VALUES (#{uid}, ${did})
 	</select>
 	
+	<select id="selectUserHerb"
+      resultType="kr.co.beautifour.domain.UserHerbVO">
+      SELECT Herb.HrbID, DiseaseINF.Did, HrbName,
+      DiseaseINF.DName, fsImg_1
+      FROM Herb
+      JOIN Therapy ON Therapy.HrbID=Herb.HrbID
+      JOIN DiseaseINF ON Therapy.DID=DiseaseINF.Did
+      JOIN Plants ON Herb.pNum = Plants.pNum
+      WHERE DiseaseINF.Did in
+      (SELECT DiseaseINF.Did FROM DiseaseINF, Suffer
+      WHERE Suffer.UID=#{UID} and DiseaseINF.Did=Suffer.DID) ORDER BY
+      Herb.HrbID
+   </select>
+	
 </mapper>
 

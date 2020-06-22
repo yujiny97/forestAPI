@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import kr.co.beautifour.domain.UserHerbVO;
 
 @Controller
 public class PlantsController {
@@ -125,11 +126,11 @@ public class PlantsController {
 		String uid = (String)param.get("uid");
 		//ArrayList<Integer> did_li = new ArrayList<Integer>();
 		ArrayList<String> did_li = new ArrayList<String>();
-		did_li = param.get("did");
+		did_li = (ArrayList<String>) param.get("did");
 		//did_li.add(Integer.parseInt((String) param.get("did")));
 		for(int i=0;i<did_li.size();i++) {
 			try {
-				hdao.insertDbyID(uid, did_li.get(i));
+				hdao.insertDbyID(uid, Integer.parseInt(did_li.get(i)));
 			}catch(Exception ex) {
 				res.put("status", "1062");//ì¤‘ë³µì½”ë“œ
 				res.put("Exception", ex.getMessage());
@@ -139,6 +140,34 @@ public class PlantsController {
 		
 		res.put("status", "OK");
 		return res;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getUserHerbs", method = RequestMethod.POST)
+    public Map<String,Object> getUserHerbs(@RequestBody Map<String, Object> param){
+       Map<String, Object> res=new HashMap();
+       String uid = (String)(param.get("uid"));
+       List<UserHerbVO> result;
+      try {
+      result=hdao.selectUserHerb(uid);
+      for(int i=0;i<result.size();i++) {
+         result.get(i).getDName_li().add(result.get(i).getDName());
+      }
+      for(int i=0;i<result.size()-1;i++) {
+         if(result.get(i).getHrbId()==result.get(i+1).getHrbId()) {
+            result.get(i).getDName_li().add(result.get(i+1).getDName());
+            result.remove(i+1);
+            i = i-1;
+         }
+      }
+      }catch(Exception ex) {//¿¡·¯°¡ ¹ß»ýÇÒ °æ¿ì
+         res.put("status", "not OK");
+         res.put("message",ex.getMessage());
+         return res;
+      }
+      res.put("status", "OK");
+      res.put("data", result);
+      return res;
     }
     
 }

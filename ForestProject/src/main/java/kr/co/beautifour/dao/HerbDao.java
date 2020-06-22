@@ -10,6 +10,7 @@ import kr.co.beautifour.domain.SelectHerbByDiseaseVO;
 import kr.co.beautifour.domain.TherapyVO;
 import kr.co.beautifour.domain.AllHerbVO;
 import kr.co.beautifour.domain.DiseaseVO;
+import kr.co.beautifour.domain.UserHerbVO;
 
 public interface HerbDao {
 	
@@ -20,5 +21,5 @@ public interface HerbDao {
 	public List<DiseaseVO> selectDisease(String search);
 	public List<SelectHerbByDiseaseVO> selectHerbsbyDisease(String search);
 	public void insertDbyID(String uid, int did) throws Exception;
-	
+	public List<UserHerbVO> selectUserHerb(String UID);
 }
