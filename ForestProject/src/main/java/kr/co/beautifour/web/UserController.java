@@ -55,6 +55,7 @@ public class UserController {
 		Map<String, Object> res=new HashMap();
 		try {
 		user=dao.selectUserByID(vo);
+		user.get(0).setPW("****");//비밀번호는 보이지 않도록 하기
 		}catch(Exception ex) {//에러가 발생할 경우
 			res.put("status", "not OK");
 			res.put("message",ex.getMessage());
@@ -65,7 +66,7 @@ public class UserController {
 		return res;
 	}
 	
-	//유저정보 ID로 가져오기
+	//유저정보 Valid한지 확인하기
 	@ResponseBody
 	@RequestMapping(value="/User/UserValid",method= RequestMethod.POST)
 	public Map<String,Object> Uservalid(@RequestBody Map<String, Object> param){
