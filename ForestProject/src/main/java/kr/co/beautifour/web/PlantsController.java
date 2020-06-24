@@ -2,6 +2,7 @@ package kr.co.beautifour.web;
 
 import javax.inject.Inject;
 
+
 import kr.co.beautifour.dao.HerbDao;
 import kr.co.beautifour.dao.PlantsDao;
 import kr.co.beautifour.domain.HerbContVO;
@@ -11,12 +12,18 @@ import kr.co.beautifour.domain.SelectHerbByDiseaseVO;
 import kr.co.beautifour.domain.TherapyVO;
 import kr.co.beautifour.domain.AllHerbVO;
 import kr.co.beautifour.domain.DiseaseVO;
+import kr.co.beautifour.domain.UserHerbVO;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -28,7 +35,7 @@ public class PlantsController {
     @Inject
     private HerbDao hdao;
     
-    //ÀüÃ¼ µµ°¨¸ñ·Ï º¸¿©ÁÖ±â
+    //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getAllPlants", method = RequestMethod.GET)
     public List<PlantsVO> getAllPlants(){
@@ -36,21 +43,15 @@ public class PlantsController {
         return result;
     }
     
-    //ÇÑ°¡Áö ½Ä¹°Á¤º¸ º¸¿©ÁÖ±â - pNumÀ¸·Î Á¢±Ù
+    //ï¿½Ñ°ï¿½ï¿½ï¿½ ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ - pNumï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getPlants", method = RequestMethod.GET)
-    public List<PlantsVO> getPlants(HttpServletRequest request){
-    	int no=0;
-    	//¸¸¾à ³Ñ°Ü¹ÞÀº °ªÀÌ ÀÖ´Ù¸é
-    	if(request.getParameter("pNum")!=null) {
-    		no = Integer.parseInt(request.getParameter("pNum"));
-    	}
-    	
-         List<PlantsVO> result =  dao.selectPlants(no);    
+    public List<PlantsVO> getPlants(){   	
+         List<PlantsVO> result =  dao.selectAllPlantsInfo();    
         return result;
     }
     
-    //ÀüÃ¼ Çãºêµµ°¨¸ñ·Ï º¸¿©ÁÖ±â
+    //ï¿½ï¿½Ã¼ ï¿½ï¿½êµµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getAllHerb", method = RequestMethod.GET)
     public List<AllHerbVO> getAllHerb(){
@@ -58,12 +59,12 @@ public class PlantsController {
         return result;
     }
     
-    //ÇÑ°¡Áö ÇãºêÁ¤º¸ º¸¿©ÁÖ±â - HrbId·Î Á¢±Ù
+    //ï¿½Ñ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ - HrbIdï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getHerbs", method = RequestMethod.GET)
     public HerbVO getHerbs(HttpServletRequest request){
         int no=0;
-    	//¸¸¾à ³Ñ°Ü¹ÞÀº °ªÀÌ ÀÖ´Ù¸é
+    	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°Ü¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
     	if(request.getParameter("HrbId")!=null) {
     		no = Integer.parseInt(request.getParameter("HrbId"));
     		
@@ -80,7 +81,7 @@ public class PlantsController {
         return result;
     }
     
-    //ÀÌ¸§À¸·Î ½Ä¹° °Ë»öÇÏ±â
+    //ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¹ï¿½ ï¿½Ë»ï¿½ï¿½Ï±ï¿½
     @ResponseBody
     @RequestMapping(value = "/getPlantsbyName", method = RequestMethod.GET)
     public List<PlantsVO> getPlantsbyName(HttpServletRequest request){
@@ -91,7 +92,7 @@ public class PlantsController {
         return result;
     }
     
-    //Áúº´ ¸ñ·Ï º¸¿©ÁÖ±â
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
     @ResponseBody
     @RequestMapping(value = "/getDList", method = RequestMethod.GET)
     public List<DiseaseVO> getDList(HttpServletRequest request){
@@ -100,13 +101,42 @@ public class PlantsController {
         return result;
     }
     
-    //º´ÀÌ¸§À¸·Î ÇØ´çÇÏ´Â ½Ä¹° °¡Á®¿À±â
+    //ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ä¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     @ResponseBody
     @RequestMapping(value = "/getPlantsbyDisease", method = RequestMethod.GET)
     public List<SelectHerbByDiseaseVO> getPlantsbyDisease(HttpServletRequest request){
     	String search = request.getParameter("search");
     	List<SelectHerbByDiseaseVO> result =  hdao.selectHerbsbyDisease(search);
         return result;
+    }
+    
+  //ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ä¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getUserHerbs", method = RequestMethod.POST)
+    public Map<String,Object> getUserHerbs(@RequestBody Map<String, Object> param){
+    	Map<String, Object> res=new HashMap();
+    	String uid = (String)(param.get("uid"));
+    	List<UserHerbVO> result;
+		try {
+		result=hdao.selectUserHerb(uid);
+		for(int i=0;i<result.size();i++) {
+			result.get(i).getDName_li().add(result.get(i).getDName());
+		}
+		for(int i=0;i<result.size()-1;i++) {
+			if(result.get(i).getHrbId()==result.get(i+1).getHrbId()) {
+				result.get(i).getDName_li().add(result.get(i+1).getDName());
+				result.remove(i+1);
+				i = i-1;
+			}
+		}
+		}catch(Exception ex) {//ì—ëŸ¬ê°€ ë°œìƒí•  ê²½ìš°
+			res.put("status", "not OK");
+			res.put("message",ex.getMessage());
+			return res;
+		}
+		res.put("status", "OK");
+		res.put("data", result);
+		return res;
     }
     
 }

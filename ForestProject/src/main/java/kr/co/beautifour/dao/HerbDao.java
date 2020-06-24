@@ -8,6 +8,7 @@ import kr.co.beautifour.domain.SelectHerbByDiseaseVO;
 import kr.co.beautifour.domain.TherapyVO;
 import kr.co.beautifour.domain.AllHerbVO;
 import kr.co.beautifour.domain.DiseaseVO;
+import kr.co.beautifour.domain.UserHerbVO;
 
 public interface HerbDao {
 	
@@ -17,5 +18,6 @@ public interface HerbDao {
 	public List<HerbContVO> selectHerbsCountry(int no);
 	public List<DiseaseVO> selectDisease(String search);
 	public List<SelectHerbByDiseaseVO> selectHerbsbyDisease(String search);
+	public List<UserHerbVO> selectUserHerb(String UID);
 	
 }
