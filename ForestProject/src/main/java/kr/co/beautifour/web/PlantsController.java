@@ -39,7 +39,7 @@ public class PlantsController {
     @Inject
     private HerbDao hdao;
     
-    //��ü ������� �����ֱ�
+    //占쏙옙체 占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙占쌍깍옙
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getAllPlants", method = RequestMethod.GET)
     public List<PlantsVO> getAllPlants(){
@@ -47,7 +47,7 @@ public class PlantsController {
         return result;
     }
     
-    //�Ѱ��� �Ĺ����� �����ֱ� - pNum���� ����
+  //占싼곤옙占쏙옙 占식뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙占쌍깍옙 - pNum占쏙옙占쏙옙 占쏙옙占쏙옙
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getPlants", method = RequestMethod.GET)
     public List<PlantsVO> getPlants(HttpServletRequest request){
@@ -60,7 +60,16 @@ public class PlantsController {
         return result;
     }
     
-    //��ü ��굵����� �����ֱ�
+    //占싼곤옙占쏙옙 占식뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙占쌍깍옙 - pNum占쏙옙占쏙옙 占쏙옙占쏙옙
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getAllPlantsInfo", method = RequestMethod.GET)
+    public List<PlantsVO> getAllPlantsInfo(){
+    	
+         List<PlantsVO> result =  dao.selectAllPlantsInfo();    
+        return result;
+    }
+    
+    //占쏙옙체 占쏙옙援듸옙占쏙옙占쏙옙 占쏙옙占쏙옙占쌍깍옙
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getAllHerb", method = RequestMethod.GET)
     public List<AllHerbVO> getAllHerb(){
@@ -68,12 +77,12 @@ public class PlantsController {
         return result;
     }
     
-    //�Ѱ��� ������� �����ֱ� - HrbId�� ����
+    //占싼곤옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙占쌍깍옙 - HrbId占쏙옙 占쏙옙占쏙옙
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getHerbs", method = RequestMethod.GET)
     public HerbVO getHerbs(HttpServletRequest request){
         int no=0;
-    	//���� �Ѱܹ��� ���� �ִٸ�
+    	//占쏙옙占쏙옙 占싼겨뱄옙占쏙옙 占쏙옙占쏙옙 占쌍다몌옙
     	if(request.getParameter("HrbId")!=null) {
     		no = Integer.parseInt(request.getParameter("HrbId"));
     		
@@ -90,7 +99,7 @@ public class PlantsController {
         return result;
     }
     
-    //�̸����� �Ĺ� �˻��ϱ�
+    //占싱몌옙占쏙옙占쏙옙 占식뱄옙 占싯삼옙占싹깍옙
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getPlantsbyName", method = RequestMethod.GET)
     public List<PlantsVO> getPlantsbyName(HttpServletRequest request){
@@ -101,7 +110,7 @@ public class PlantsController {
         return result;
     }
     
-    //���� ��� �����ֱ�
+    //占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙占쌍깍옙
     @ResponseBody
     @RequestMapping(value = "/Disease/getDList", method = RequestMethod.GET)
     public List<DiseaseVO> getDList(HttpServletRequest request){
@@ -110,7 +119,7 @@ public class PlantsController {
         return result;
     }
     
-    //���̸����� �ش��ϴ� �Ĺ� ��������
+    //占쏙옙占싱몌옙占쏙옙占쏙옙 占쌔댐옙占싹댐옙 占식뱄옙 占쏙옙占쏙옙占쏙옙占쏙옙
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getPlantsbyDisease", method = RequestMethod.GET)
     public List<SelectHerbByDiseaseVO> getPlantsbyDisease(HttpServletRequest request){
@@ -120,7 +129,7 @@ public class PlantsController {
     }
     
 
-  //���̸����� �ش��ϴ� �Ĺ� ��������
+  //占쏙옙占싱몌옙占쏙옙占쏙옙 占쌔댐옙占싹댐옙 占식뱄옙 占쏙옙占쏙옙占쏙옙占쏙옙
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getUserHerbs", method = RequestMethod.POST)
     public Map<String,Object> getUserHerbs(@RequestBody Map<String, Object> param){
@@ -139,7 +148,7 @@ public class PlantsController {
 				i = i-1;
 			}
 		}
-		}catch(Exception ex) {//에러가 발생할 경우
+		}catch(Exception ex) {//�뿉�윭媛� 諛쒖깮�븷 寃쎌슦
 			res.put("status", "not OK");
 			res.put("message",ex.getMessage());
 			return res;
@@ -149,7 +158,7 @@ public class PlantsController {
 		return res;
     }
     
-    //���̸����� �ش��ϴ� �Ĺ� ��������
+    //占쏙옙占싱몌옙占쏙옙占쏙옙 占쌔댐옙占싹댐옙 占식뱄옙 占쏙옙占쏙옙占쏙옙占쏙옙
     @ResponseBody
     @RequestMapping(value = "/Disease/insertDbyID", method = RequestMethod.POST)
     public HashMap<String, String> insertDbyID(@RequestBody Map<String, Object> param){
@@ -164,7 +173,7 @@ public class PlantsController {
 			try {
 				hdao.insertDbyID(uid, Integer.parseInt(did_li.get(i)));
 			}catch(Exception ex) {
-				res.put("status", "1062");//중복코드
+				res.put("status", "1062");//以묐났肄붾뱶
 				res.put("Exception", ex.getMessage());
 				return res;
 			}
