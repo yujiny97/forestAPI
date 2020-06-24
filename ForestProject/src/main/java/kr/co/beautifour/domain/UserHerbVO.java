@@ -2,6 +2,8 @@ package kr.co.beautifour.domain;
 import java.util.ArrayList;
 
 public class UserHerbVO {
+
+	
    private int HrbId;
    private String HrbName;
    private int Did;

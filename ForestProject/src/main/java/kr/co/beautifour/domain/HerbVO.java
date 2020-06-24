@@ -1,7 +1,6 @@
 package kr.co.beautifour.domain;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HerbVO {
 	private int HrbId;

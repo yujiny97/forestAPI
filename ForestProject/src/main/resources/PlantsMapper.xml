@@ -9,79 +9,105 @@
 
 	<select id="selectPlants"
 		resultType="kr.co.beautifour.domain.PlantsVO">
-		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1, fsImg_2, fsGbn,
-		fsClassname, isHerb, s_Month, Season, hName FROM Plants natural join
-		s_When natural join Season natural join Livein natural join Habitat
-		where Plants.pNum = ${no} and s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month
-		and Plants.pNum = Livein.pNum and Livein.hid = Habitat.hid
+		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1,
+		fsImg_2, fsGbn,
+		fsClassname, isHerb, s_Month, Season, hName FROM Plants
+		natural join
+		s_When natural join Season natural join Livein natural
+		join Habitat
+		where Plants.pNum = ${no} and s_When.pNum = Plants.pNum
+		and Season.s_Month = s_When.s_Month
+		and Plants.pNum = Livein.pNum and
+		Livein.hid = Habitat.hid
 	</select>
-	
-	<select id="selectAllPlants" resultType="kr.co.beautifour.domain.PlantsVO">
+
+	<select id="selectAllPlants"
+		resultType="kr.co.beautifour.domain.PlantsVO">
 		SELECT pNum, fskName, fsImg_1 FROM Plants
 	</select>
-	
+
 	<select id="selectAllPlantsInfo"
 		resultType="kr.co.beautifour.domain.PlantsVO">
-		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1, fsImg_2, fsGbn,
-		fsClassname, isHerb, s_Month, Season, hName FROM Plants natural join
-		s_When natural join Season natural join Livein natural join Habitat
-		where s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month
-		and Plants.pNum = Livein.pNum and Livein.hid = Habitat.hid
+		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1,
+		fsImg_2, fsGbn,
+		fsClassname, isHerb, s_Month, Season, hName FROM Plants
+		natural join
+		s_When natural join Season natural join Livein natural
+		join Habitat
+		where s_When.pNum = Plants.pNum and Season.s_Month =
+		s_When.s_Month
+		and Plants.pNum = Livein.pNum and Livein.hid =
+		Habitat.hid ORDER BY pNum
 	</select>
-	
+
 	<select id="selectAllHerb"
 		resultType="kr.co.beautifour.domain.AllHerbVO">
-		SELECT Plants.pNum, HrbID, HrbName, fsImg_1 FROM Plants, Herb WHERE Herb.pNum=Plants.pNum
+		SELECT Plants.pNum, HrbID, HrbName, fsImg_1 FROM Plants,
+		Herb WHERE Herb.pNum=Plants.pNum
 	</select>
-	
+
 	<select id="selectHerbs"
 		resultType="kr.co.beautifour.domain.HerbVO">
-		select HrbID, HrbName, mng, caution, internal, external, fsImg_1, fsImg_2
-		from Herb LEFT OUTER join InternalC on Herb.inid=InternalC.inid LEFT
-		OUTER join ExternalC on Herb.exid=ExternalC.exid INNER JOIN Plants ON
+		select HrbID, HrbName, mng, caution, internal, external,
+		fsImg_1, fsImg_2
+		from Herb LEFT OUTER join InternalC on
+		Herb.inid=InternalC.inid LEFT
+		OUTER join ExternalC on
+		Herb.exid=ExternalC.exid INNER JOIN Plants ON
 		Plants.pNum=Herb.pNum
-		WHERE HrbId = ${no} 
+		WHERE HrbId = ${no}
 	</select>
 
 	<select id="selectHerbsCountry"
 		resultType="kr.co.beautifour.domain.HerbContVO">
-		select Herb.HrbID, cName From Country, Cont, Herb 
-		where Herb.HrbID = ${no} and Country.cId=Cont.Cid
-		and Herb.HrbID= Cont.HrbID 
+		select Herb.HrbID, cName From Country, Cont, Herb
+		where
+		Herb.HrbID = ${no} and Country.cId=Cont.Cid
+		and Herb.HrbID= Cont.HrbID
 	</select>
-	
+
 	<select id="selectTherapy"
 		resultType="kr.co.beautifour.domain.TherapyVO">
-		select Herb.HrbID, DName From DiseaseINF, Therapy, Herb 
+		select Herb.HrbID, DName From DiseaseINF, Therapy, Herb
 		where Herb.HrbID = ${no} and
 		DiseaseINF.Did=Therapy.DID
-		and Herb.HrbID= Therapy.HrbID 
+		and Herb.HrbID=
+		Therapy.HrbID
 	</select>
 
 	<select id="selectsearchPlants" parameterType="string"
 		resultType="kr.co.beautifour.domain.PlantsVO">
-		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1, fsImg_2, fsGbn,
-		fsClassname, isHerb, s_Month, Season, hName FROM Plants natural join
-		s_When natural join Season natural join Livein natural join Habitat
+		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1,
+		fsImg_2, fsGbn,
+		fsClassname, isHerb, s_Month, Season, hName FROM Plants
+		natural join
+		s_When natural join Season natural join Livein natural
+		join Habitat
 		WHERE fskName Like CONCAT('%',#{search},'%')
-		and s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month and
+		and
+		s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month and
 		Plants.pNum = Livein.pNum and Livein.hid = Habitat.hid
 	</select>
 
 	<select id="selectDisease" parameterType="string"
 		resultType="kr.co.beautifour.domain.DiseaseVO">
-		select * from DiseaseINF WHERE DName Like CONCAT('%',#{search},'%')
+		select * from DiseaseINF WHERE DName Like
+		CONCAT('%',#{search},'%')
 	</select>
 
 	<select id="selectHerbsbyDisease"
 		resultType="kr.co.beautifour.domain.SelectHerbByDiseaseVO">
 		select Herb.HrbId, HrbName, DName
 		from Herb
-		JOIN Therapy on Therapy.HrbID = Herb.HrbID
-		JOIN DiseaseINF on Therapy.DID = DiseaseINF.Did
-		Where DiseaseINF.Did in (select Did from DiseaseINF WHERE DName Like
+		JOIN Therapy on
+		Therapy.HrbID = Herb.HrbID
+		JOIN DiseaseINF on Therapy.DID =
+		DiseaseINF.Did
+		Where DiseaseINF.Did in (select Did from DiseaseINF
+		WHERE DName Like
 		CONCAT('%',#{search},'%')) ORDER BY DName
 	</select>
+
 
 	<select id="insertDbyID" parameterType="HashMap">
 		INSERT INTO Suffer VALUES (#{uid}, ${did})
@@ -101,5 +127,6 @@
       Herb.HrbID
    </select>
 	
+
 </mapper>
 

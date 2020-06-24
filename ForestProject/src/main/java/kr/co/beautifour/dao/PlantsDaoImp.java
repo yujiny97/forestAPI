@@ -17,6 +17,11 @@ public class PlantsDaoImp implements PlantsDao {
     private static final String namespace = "kr.co.beautifour.PlantsMapper";
    
     @Override
+    public List<PlantsVO> selectAllPlantsInfo() {
+        return sqlSession.selectList(namespace+".selectAllPlantsInfo");
+    }
+    
+    @Override
     public List<PlantsVO> selectPlants(int no) {
         return sqlSession.selectList(namespace+".selectPlants", no);
     }
@@ -30,6 +35,8 @@ public class PlantsDaoImp implements PlantsDao {
     public List<PlantsVO> selectsearchPlants(String search) {
     	return sqlSession.selectList(namespace+".selectsearchPlants", search);
     }
+    
+    
    
 }
 
