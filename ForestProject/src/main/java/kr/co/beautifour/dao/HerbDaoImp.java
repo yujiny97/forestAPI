@@ -1,6 +1,8 @@
 package kr.co.beautifour.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -61,8 +63,19 @@ public class HerbDaoImp implements HerbDao{
 	}
 	
 	@Override
+
+	public void insertDbyID(String uid, int did) throws Exception{
+		// TODO Auto-generated method stub
+		HashMap<String, Object> user = new HashMap<String, Object>();
+		user.put("uid", uid);
+		user.put("did", did);
+		sqlSession.selectList(namespace+".insertDbyID", user);
+	}
+	
+	@Override
     public List<UserHerbVO> selectUserHerb(String UID) {
-    	return sqlSession.selectList(namespace+".selectUserHerb", UID);
+       return sqlSession.selectList(namespace+".selectUserHerb", UID);
     }
+
 
 }

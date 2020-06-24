@@ -10,6 +10,7 @@ import kr.co.beautifour.domain.HerbVO;
 import kr.co.beautifour.domain.PlantsVO;
 import kr.co.beautifour.domain.SelectHerbByDiseaseVO;
 import kr.co.beautifour.domain.TherapyVO;
+import kr.co.beautifour.domain.UserVO;
 import kr.co.beautifour.domain.AllHerbVO;
 import kr.co.beautifour.domain.DiseaseVO;
 import kr.co.beautifour.domain.UserHerbVO;
@@ -20,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import kr.co.beautifour.domain.UserHerbVO;
 
 @Controller
 public class PlantsController {
@@ -83,7 +86,7 @@ public class PlantsController {
     
     //�̸����� �Ĺ� �˻��ϱ�
     @ResponseBody
-    @RequestMapping(value = "/getPlantsbyName", method = RequestMethod.GET)
+    @RequestMapping(value = "/PlantInfo/getPlantsbyName", method = RequestMethod.GET)
     public List<PlantsVO> getPlantsbyName(HttpServletRequest request){
         
         String search = request.getParameter("search");
@@ -94,7 +97,7 @@ public class PlantsController {
     
     //���� ��� �����ֱ�
     @ResponseBody
-    @RequestMapping(value = "/getDList", method = RequestMethod.GET)
+    @RequestMapping(value = "/Disease/getDList", method = RequestMethod.GET)
     public List<DiseaseVO> getDList(HttpServletRequest request){
         String search = request.getParameter("search");
     	List<DiseaseVO> result =  hdao.selectDisease(search);
@@ -103,13 +106,14 @@ public class PlantsController {
     
     //���̸����� �ش��ϴ� �Ĺ� ��������
     @ResponseBody
-    @RequestMapping(value = "/getPlantsbyDisease", method = RequestMethod.GET)
+    @RequestMapping(value = "/PlantInfo/getPlantsbyDisease", method = RequestMethod.GET)
     public List<SelectHerbByDiseaseVO> getPlantsbyDisease(HttpServletRequest request){
     	String search = request.getParameter("search");
     	List<SelectHerbByDiseaseVO> result =  hdao.selectHerbsbyDisease(search);
         return result;
     }
     
+
   //���̸����� �ش��ϴ� �Ĺ� ��������
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getUserHerbs", method = RequestMethod.POST)
@@ -138,5 +142,32 @@ public class PlantsController {
 		res.put("data", result);
 		return res;
     }
+    
+    //���̸����� �ش��ϴ� �Ĺ� ��������
+    @ResponseBody
+    @RequestMapping(value = "/Disease/insertDbyID", method = RequestMethod.POST)
+    public HashMap<String, String> insertDbyID(@RequestBody Map<String, Object> param){
+    	
+		HashMap<String, String> res=new HashMap();
+		String uid = (String)param.get("uid");
+		//ArrayList<Integer> did_li = new ArrayList<Integer>();
+		ArrayList<String> did_li = new ArrayList<String>();
+		did_li = (ArrayList<String>) param.get("did");
+		//did_li.add(Integer.parseInt((String) param.get("did")));
+		for(int i=0;i<did_li.size();i++) {
+			try {
+				hdao.insertDbyID(uid, Integer.parseInt(did_li.get(i)));
+			}catch(Exception ex) {
+				res.put("status", "1062");//중복코드
+				res.put("Exception", ex.getMessage());
+				return res;
+			}
+		}
+		
+		res.put("status", "OK");
+		return res;
+    }
+    
+    
     
 }
