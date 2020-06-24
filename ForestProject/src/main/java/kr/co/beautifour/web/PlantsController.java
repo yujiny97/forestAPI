@@ -15,6 +15,7 @@ import kr.co.beautifour.domain.AllHerbVO;
 import kr.co.beautifour.domain.DiseaseVO;
 import kr.co.beautifour.domain.UserHerbVO;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,8 +50,13 @@ public class PlantsController {
     //�Ѱ��� �Ĺ����� �����ֱ� - pNum���� ����
     @ResponseBody
     @RequestMapping(value = "/PlantInfo/getPlants", method = RequestMethod.GET)
-    public List<PlantsVO> getPlants(){   	
-         List<PlantsVO> result =  dao.selectAllPlantsInfo();    
+    public List<PlantsVO> getPlants(HttpServletRequest request){
+    	int no=0;
+    	if(request.getParameter("pNum")!=null) {
+    		no = Integer.parseInt(request.getParameter("pNum"));
+    		
+    	}
+         List<PlantsVO> result =  dao.selectPlants(no);    
         return result;
     }
     
