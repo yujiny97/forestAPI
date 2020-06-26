@@ -3,20 +3,13 @@ package kr.co.beautifour.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import kr.co.beautifour.dao.UserDao;
 import kr.co.beautifour.domain.MybookVO;
 import kr.co.beautifour.domain.TempPlantsVO;
@@ -226,6 +218,11 @@ public class UserController {
 			return res;
 		}
 		//////////////////insert tempPlants
+		 //String filePath="/home/centos/resource/img/";//centos에서 저장해야하는 장소
+		//String savePath="/Img/Plants/";
+		String filePath="C:/spring_workspace/imagetest/";
+		String savePath="/Test/";
+		
 		//도감 추가하기
 		@ResponseBody
 		@RequestMapping(value="/TempPlants/InsertTempPlants",method=RequestMethod.POST)
@@ -247,8 +244,6 @@ public class UserController {
 	        //파일업로드시 파일명은 ASCII코드로 저장되므로, 한글명으로 저장 필요
 	        //UUID클래스 - (특수문자를 포함한)문자를 랜덤으로 생성  
 			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-	        String filePath="/home/centos/resource/img/";//centos에서 저장해야하는 장소
-			//String filePath="C:/spring_workspace/imagetest/";
 			File file = new File(filePath + storedFileName);
 			//저장 경로를 vo의 파일 이름으로 넣는다.
 			System.out.println("Controller");
@@ -273,7 +268,7 @@ public class UserController {
 					fskName,
 					fseName,
 					fsLifeTime,
-					filePath + storedFileName,
+					savePath + storedFileName,
 					fsGbn,
 					fsClassname,
 					isHerb.intValue()
@@ -320,10 +315,12 @@ public class UserController {
 			vo.setIsHerb(isHerb);
 			
 			TempPlantsVO old=dao.selectoneTempPlants(vo);
-			vo.setFsImg_1(old.getFsImg_1());//이름은 이전꺼랑 똑같이 가져오기
+			String fname=old.getFsImg_1();
+			String[] lst=fname.split("/");
+			fname=filePath+lst[lst.length-1];//이름은 이전꺼랑 똑같이 가져오기
 			if(changedpic.intValue()==1)// 바뀐경우 사진 새롭게 추가
 			{
-				File file = new File(old.getFsImg_1());	
+				File file = new File(fname);	
 				try {
 					images.transferTo(file);
 				} catch (IllegalStateException e) {
@@ -407,7 +404,10 @@ public class UserController {
 			Map<String, String> res=new HashMap();
 			try {
 				TempPlantsVO old=dao.selectoneTempPlants(vo);
-				File file = new File(old.getFsImg_1());
+				String fname=old.getFsImg_1();
+				String[] lst=fname.split("/");
+				fname=filePath+lst[lst.length-1];
+				File file = new File(fname);
 				dao.deleteTempPlantsByID(vo);
 				file.delete();
 			}catch(Exception ex) {
@@ -434,7 +434,10 @@ public class UserController {
 				List<TempPlantsVO> all=dao.selectTempPlants(vo);
 				dao.deleteAllTempPlants(vo);
 				for(TempPlantsVO v: all) {
-					File file = new File(v.getFsImg_1());//파일도 삭제
+					String fname=v.getFsImg_1();
+					String[] lst=fname.split("/");
+					fname=filePath+lst[lst.length-1];
+					File file = new File(fname);//파일도 삭제
 					file.delete();
 				}
 			}catch(Exception ex) {
