@@ -319,10 +319,12 @@ public class UserController {
 			TempPlantsVO old=dao.selectoneTempPlants(vo);
 			String fname=old.getFsImg_1();
 			String[] lst=fname.split("/");
-			fname=filePath+lst[lst.length-1];//이름은 이전꺼랑 똑같이 가져오기
+			fname=savePath+lst[lst.length-1];//이름은 이전꺼랑 똑같이 가져오기
+			vo.setFsImg_1(fname);
+			
 			if(changedpic.intValue()==1)// 바뀐경우 사진 새롭게 추가
 			{
-				File file = new File(fname);	
+				File file = new File(filePath+lst[lst.length-1]);	
 				try {
 					images.transferTo(file);
 				} catch (IllegalStateException e) {
