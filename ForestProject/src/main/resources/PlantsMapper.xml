@@ -97,12 +97,14 @@
 
 	<select id="selectHerbsbyDisease"
 		resultType="kr.co.beautifour.domain.SelectHerbByDiseaseVO">
-		select Herb.HrbId, HrbName, DName
+		select Herb.HrbId, HrbName, DName, fsImg_1
 		from Herb
 		JOIN Therapy on
 		Therapy.HrbID = Herb.HrbID
 		JOIN DiseaseINF on Therapy.DID =
 		DiseaseINF.Did
+		JOIN Plants on
+		Plants.pNum = Herb.pNum
 		Where DiseaseINF.Did in (select Did from DiseaseINF
 		WHERE DName Like
 		CONCAT('%',#{search},'%')) ORDER BY DName

@@ -1,9 +1,9 @@
 package kr.co.beautifour.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import kr.co.beautifour.domain.MybookVO;
+import kr.co.beautifour.domain.TempPlantsVO;
 import kr.co.beautifour.domain.UserVO;
 
 public interface UserDao {
@@ -15,4 +15,10 @@ public interface UserDao {
 	public List<MybookVO> selectMybook(MybookVO vo) throws Exception;
 	public void deleteMybookbyID(MybookVO vo) throws Exception;
 	public void updateMybookbyID(MybookVO vo) throws Exception;
+	public void insertTempPlants(TempPlantsVO vo) throws Exception;
+	public void updateTempPlants(TempPlantsVO vo) throws Exception;
+	public List<TempPlantsVO> selectTempPlants(TempPlantsVO vo) throws Exception;
+	public TempPlantsVO selectoneTempPlants(TempPlantsVO vo) throws Exception;
+	public void deleteTempPlantsByID(TempPlantsVO vo) throws Exception;
+	public void deleteAllTempPlants(TempPlantsVO vo) throws Exception;
 }

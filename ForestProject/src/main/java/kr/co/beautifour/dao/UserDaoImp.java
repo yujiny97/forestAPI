@@ -1,15 +1,14 @@
 package kr.co.beautifour.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import kr.co.beautifour.domain.MybookVO;
+import kr.co.beautifour.domain.TempPlantsVO;
 import kr.co.beautifour.domain.UserVO;
 
 @Repository
@@ -73,6 +72,52 @@ public class UserDaoImp implements UserDao{
 	public int UserValid(UserVO vo) throws Exception {
 		System.out.println("Uservalid sql 실행전");
 		return sqlSession.selectOne(namespace+".Uservalid", vo);
+	}
+	
+	@Override
+	public void insertTempPlants(TempPlantsVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("insertTempPlants OK");
+		sqlSession.insert(namespace+".insertTempPlants", vo);
+	}
+	
+	@Override
+	public void updateTempPlants(TempPlantsVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("updateTempPlants까지 됨");
+		sqlSession.update(namespace+".updateTempPlants",vo);
+		
+	}
+	
+	@Override
+	public List<TempPlantsVO> selectTempPlants(TempPlantsVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("selectTempPlantsVO까지 됨");
+		return sqlSession.selectList(namespace+".selectTempPlants",vo);
+		
+	}
+	@Override
+	public TempPlantsVO selectoneTempPlants(TempPlantsVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("selectTempPlantsVO까지 됨");
+		return sqlSession.selectOne(namespace+".selectOneTempPlants",vo);
+		
+	}
+	
+	@Override
+	public void deleteTempPlantsByID(TempPlantsVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("deleteTempPlantsVO까지 됨");
+		sqlSession.delete(namespace+".deleteTempPlants",vo);
+		
+	}
+	
+	@Override
+	public void deleteAllTempPlants(TempPlantsVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("deleteallTempPlantsVO까지 됨");
+		sqlSession.delete(namespace+".deleteallTempPlants",vo);
+		
 	}
 
 
