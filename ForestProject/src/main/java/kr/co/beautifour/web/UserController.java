@@ -220,10 +220,10 @@ public class UserController {
 		//////////////////insert tempPlants
 		String filePath="/home/centos/resource/img/";//centos에서 저장해야하는 장소
 		String savePath="/Img/Plants/";
-		/*
-		 * String filePath="C:/spring_workspace/imagetest/"; 
-		 * String savePath="/Test/";
-		 */
+		
+//		  String filePath="C:/spring_workspace/imagetest/"; 
+//		  String savePath="/Test/";
+		 
 		
 		//도감 추가하기
 		@ResponseBody
@@ -239,6 +239,26 @@ public class UserController {
 				@RequestParam(name = "isHerb") Integer isHerb,
 				@RequestPart(value="file", required = true) final MultipartFile images)throws Exception{
 			System.out.println("Controller start");
+			Map<String, String> res=new HashMap();
+			
+			//이미 존재하는지 확인한다.
+			TempPlantsVO check=new TempPlantsVO();
+			int cnt=0;
+			check.setFskName(fskName);
+			try{
+				cnt=dao.selectonePlants(check);
+			}catch(Exception ex) {
+				System.out.println(ex);
+				res.put("status", "select error");//중복코드
+				res.put("Exception", ex.getMessage());
+				return res;
+			}
+			
+			if(cnt>0) {//이미 존재할때
+				res.put("status", "Already Exist");//중복코드
+				return res;
+			}
+			
 			//파일을 먼저 경로에 저장한다.
 			String orgFile=images.getOriginalFilename();
 			String orgFileExtension=orgFile.substring(orgFile.lastIndexOf("."));//확장자 가져오기
@@ -249,7 +269,7 @@ public class UserController {
 			File file = new File(filePath + storedFileName);
 			//저장 경로를 vo의 파일 이름으로 넣는다.
 			System.out.println("Controller");
-			Map<String, String> res=new HashMap();
+			
 			try {
 				images.transferTo(file);
 			} catch (IllegalStateException e) {
@@ -264,7 +284,7 @@ public class UserController {
 				res.put("Exception", e.getMessage());
 				return res;
 			}
-			//TempPlantsVO vo=new TempPlantsVO();
+		
 			TempPlantsVO vo=new TempPlantsVO(
 					uid,
 					fskName,

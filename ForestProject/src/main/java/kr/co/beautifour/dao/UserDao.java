@@ -21,4 +21,5 @@ public interface UserDao {
 	public TempPlantsVO selectoneTempPlants(TempPlantsVO vo) throws Exception;
 	public void deleteTempPlantsByID(TempPlantsVO vo) throws Exception;
 	public void deleteAllTempPlants(TempPlantsVO vo) throws Exception;
+	public int selectonePlants(TempPlantsVO vo) throws Exception;
 }

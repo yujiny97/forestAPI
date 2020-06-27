@@ -119,6 +119,15 @@ public class UserDaoImp implements UserDao{
 		sqlSession.delete(namespace+".deleteallTempPlants",vo);
 		
 	}
+	
+	@Override
+	public int selectonePlants(TempPlantsVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("count Plants");
+		return sqlSession.selectOne(namespace+".selectOnePlantsByName",vo);
+		
+	}
+	
 
 
 	

@@ -74,6 +74,11 @@
         isHerb=#{isHerb}
         where UID=#{uid} and bid=#{bid}
     </update>
+
+	<!-- Plants에 똑같은 이름을 가진 식물이 있는지 확인 -->
+    <select id="selectOnePlantsByName" resultType= "java.lang.Integer">
+        select Count(*) from Plants where fskName=#{fskName}
+    </select>
 	
 	<!-- UID오 did로TempPlants하나만 찾기 -->
     <select id="selectOneTempPlants" resultType= "kr.co.beautifour.domain.TempPlantsVO">
