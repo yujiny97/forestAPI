@@ -219,10 +219,10 @@ public class UserController {
 		}
 		//////////////////insert tempPlants
 		String filePath="/home/centos/resource/img/";//centos에서 저장해야하는 장소
-		String savePath="/Img/Plants/";
+		String savePath="http://52.14.219.87:8080/Img/Plants/";
 		
 //		  String filePath="C:/spring_workspace/imagetest/"; 
-//		  String savePath="/Test/";
+//		  String savePath="http://localhost:8080/Test/";
 		 
 		
 		//도감 추가하기
