@@ -221,8 +221,8 @@ public class UserController {
 		String filePath="/home/centos/resource/img/";//centos에서 저장해야하는 장소
 		String savePath="http://52.14.219.87:8080/Img/Plants/";
 		
-		//  String filePath="C:/spring_workspace/imagetest/"; 
-		 // String savePath="http://localhost:8080/Test/";
+		  //String filePath="C:/spring_workspace/imagetest/"; 
+		  //String savePath="http://localhost:8080/Test/";
 		 
 		
 		//도감 추가하기
@@ -329,12 +329,14 @@ public class UserController {
 			TempPlantsVO vo=new TempPlantsVO();
 			vo.setUid(uid);
 			vo.setBid(bid.intValue());
+			vo.setFsLifeTime(fsLifeTime);
 			vo.setFsClassname(fsClassname);
 			vo.setFseName(fseName);
 			vo.setFsGbn(fsGbn);
 			vo.setFskName(fskName);
-			vo.setFsLifeTime(fsLifeTime);
 			vo.setIsHerb(isHerb);
+			
+			System.out.println(vo.getFsLifeTime());
 			
 			TempPlantsVO old=dao.selectoneTempPlants(vo);
 			String fname=old.getFsImg_1();
@@ -362,7 +364,7 @@ public class UserController {
 				}
 			}
 			try {
-				//dao.updateTempPlants(vo);
+				dao.updateTempPlants(vo);
 			}catch(Exception ex) {
 				System.out.println(ex);
 				res.put("status", "1062");//중복코드

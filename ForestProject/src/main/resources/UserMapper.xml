@@ -72,6 +72,7 @@
         fsGbn=#{fsGbn},
         fsClassname=#{fsClassname},
         isHerb=#{isHerb}
+        fsLifeTime=#{fsLifeTime}
         where UID=#{uid} and bid=#{bid}
     </update>
 
