@@ -340,16 +340,24 @@ public class UserController {
 			
 			TempPlantsVO old=dao.selectoneTempPlants(vo);
 			String fname=old.getFsImg_1();
-			System.out.println("file name:"+ fname);
+			String orgFileExtension=fname.substring(fname.lastIndexOf("."));//확장자 가져오기
+			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
+			System.out.println("file name:"+ storedFileName);
+			
+			
 			String[] lst=fname.split("/");
 			fname=savePath+lst[lst.length-1];//이름은 이전꺼랑 똑같이 가져오기
-			vo.setFsImg_1(fname);
+			File file = new File(filePath+lst[lst.length-1]);
+			System.out.println(filePath+lst[lst.length-1]);
+			file.delete();
+			//savePath+storedFileName
+			vo.setFsImg_1(savePath+storedFileName);
 			
 			if(changedpic.intValue()==1)// 바뀐경우 사진 새롭게 추가
 			{
-				File file = new File(filePath+lst[lst.length-1]);	
+				File file2 = new File(filePath+storedFileName);	
 				try {
-					images.transferTo(file);
+					images.transferTo(file2);
 				} catch (IllegalStateException e) {
 					System.out.println(e);
 					res.put("status", "IllegalStateException");//중복코드
