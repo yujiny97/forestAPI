@@ -71,7 +71,7 @@
         fsImg_1=#{fsImg_1},
         fsGbn=#{fsGbn},
         fsClassname=#{fsClassname},
-        isHerb=#{isHerb}
+        isHerb=#{isHerb},
         fsLifeTime=#{fsLifeTime}
         where UID=#{uid} and bid=#{bid}
     </update>
