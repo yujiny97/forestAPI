@@ -63,7 +63,6 @@ public class HerbDaoImp implements HerbDao{
 	}
 	
 	@Override
-
 	public void insertDbyID(String uid, int did) throws Exception{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> user = new HashMap<String, Object>();

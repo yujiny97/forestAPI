@@ -1,5 +1,6 @@
 package kr.co.beautifour.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,6 +35,14 @@ public class PlantsDaoImp implements PlantsDao {
     @Override
     public List<PlantsVO> selectsearchPlants(String search) {
     	return sqlSession.selectList(namespace+".selectsearchPlants", search);
+    }
+    
+    @Override
+    public void deleteDisease(String uid, String dname) throws Exception{
+    	HashMap<String, String> user = new HashMap<String, String>();
+		user.put("UID", uid);
+		user.put("DName", dname);
+		sqlSession.selectList(namespace+".deleteDisease", user);
     }
     
     

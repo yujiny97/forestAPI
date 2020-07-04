@@ -183,6 +183,25 @@ public class PlantsController {
 		return res;
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/Disease/deleteDisease", method = RequestMethod.POST)
+    public HashMap<String, String> deleteDisease(@RequestBody Map<String, String> param){
+    	
+		HashMap<String, String> res=new HashMap();
+		String uid = (String)param.get("uid");
+		String dname = (String) param.get("dname");
+		try {
+			dao.deleteDisease(uid, dname);
+		}catch(Exception ex) {
+			res.put("status", "1062");//以묐났肄붾뱶
+			res.put("Exception", ex.getMessage());
+			return res;
+		}
+		
+		res.put("status", "OK");
+		return res;
+    }
+    
     
     
 }
