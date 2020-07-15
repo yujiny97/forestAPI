@@ -11,6 +11,7 @@ public class TempPlantsVO {
 	private String  fsGbn;
 	private String  fsClassname;
 	private int isHerb;
+	private int isPV; 
 	public TempPlantsVO(){}
 	public TempPlantsVO(String uid,String fskName,String fseName, String fsLifeTime,String fsImg_1,String fsGbn,String fsClassname,int isHerb) {
 		this.uid=uid;
@@ -75,5 +76,11 @@ public class TempPlantsVO {
 	}
 	public void setIsHerb(int isHerb) {
 		this.isHerb = isHerb;
+	}
+	public int getIsPV() {
+		return isPV;
+	}
+	public void setIsPV(int isPV) {
+		this.isPV = isPV;
 	}
 }

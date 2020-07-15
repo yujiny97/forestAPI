@@ -5,10 +5,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="kr.co.beautifour.UserMapper">
-<!-- 모든 user 찾기 -> 이거는 나중에 지워야함 -->
-    <select id="selectUser" resultType= "kr.co.beautifour.domain.UserVO">
-        select * from UserINF
-    </select>
 <!-- UID로 user 정보 찾기 -->
     <select id="selectUserByID" resultType= "kr.co.beautifour.domain.UserVO">
         select * from UserINF where UID="${UID}"
@@ -39,7 +35,7 @@
 	
 		<!--사용자 temp 도감 insert 하기  -->
 	<insert id="insertTempPlants">
-		insert into TempPlants (bid,UID,fskName,fseName,fsLifeTime,fsImg_1,fsGbn,fsClassname,isHerb,writeD) 
+		insert into TempPlants (bid,UID,fskName,fseName,fsLifeTime,fsImg_1,fsGbn,fsClassname,isHerb,isPV,writeD) 
 		values((select if(count(m.bid)=0,1,MAX(m.bid)+1) 
 		from TempPlants m where m.UID=#{uid}),
 		#{uid},
@@ -50,6 +46,7 @@
 		#{fsGbn},
 		#{fsClassname},
 		#{isHerb},
+		#{isPV},
 		date_format(NOW(),'%Y-%m-%d %H:%i:%s')
 		);
 	</insert>
@@ -72,7 +69,8 @@
         fsGbn=#{fsGbn},
         fsClassname=#{fsClassname},
         isHerb=#{isHerb},
-        fsLifeTime=#{fsLifeTime}
+        fsLifeTime=#{fsLifeTime},
+        isPV=#{isPV}
         where UID=#{uid} and bid=#{bid}
     </update>
 
@@ -84,6 +82,11 @@
 	<!-- UID오 did로TempPlants하나만 찾기 -->
     <select id="selectOneTempPlants" resultType= "kr.co.beautifour.domain.TempPlantsVO">
         select * from TempPlants where UID=#{uid} and bid=#{bid}
+    </select>
+    
+    	<!-- 공개된 TempPlants들을 찾기 -->
+    <select id="selectALLTempPlants" resultType= "kr.co.beautifour.domain.TempPlantsVO">
+        select * from TempPlants where isPV=0;
     </select>
     
     	<!-- UID로 TempPlants 찾기 -->

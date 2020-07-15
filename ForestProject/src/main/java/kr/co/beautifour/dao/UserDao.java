@@ -7,7 +7,6 @@ import kr.co.beautifour.domain.TempPlantsVO;
 import kr.co.beautifour.domain.UserVO;
 
 public interface UserDao {
-	public List<UserVO> selectUser(UserVO vo)throws Exception;
 	public List<UserVO> selectUserByID(UserVO vo)throws Exception;
 	public int UserValid(UserVO vo)throws Exception;
 	public void insertUser(UserVO vo) throws Exception;
@@ -22,4 +21,5 @@ public interface UserDao {
 	public void deleteTempPlantsByID(TempPlantsVO vo) throws Exception;
 	public void deleteAllTempPlants(TempPlantsVO vo) throws Exception;
 	public int selectonePlants(TempPlantsVO vo) throws Exception;
+	public List<TempPlantsVO> selectALLTempPlants() throws Exception;
 }

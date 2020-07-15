@@ -16,12 +16,7 @@ public class UserDaoImp implements UserDao{
 	@Inject
 	private SqlSession sqlSession;
 	private static final String namespace ="kr.co.beautifour.UserMapper";
-	
-	@Override
-	public List<UserVO> selectUser(UserVO vo) throws Exception{
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".selectUser",vo);
-	}
+
 
 	@Override
 	public void insertUser(UserVO vo) throws Exception{
@@ -128,6 +123,14 @@ public class UserDaoImp implements UserDao{
 		
 	}
 	
+	//게시판에서 공개인 애들은 다 가져온다.
+	@Override
+	public List<TempPlantsVO> selectALLTempPlants() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("selectALLTempPlants까지 됨");
+		return sqlSession.selectList(namespace+".selectALLTempPlants");
+		
+	}
 
 
 	

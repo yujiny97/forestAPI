@@ -33,25 +33,6 @@ public class UserController {
 	 ServletContext context;
 	//private String url="52.14.219.87";
 	
-	//모든 유저정보 가져오기
-	@ResponseBody
-	@RequestMapping(value="/getAllUser",method= RequestMethod.GET)
-	public Map<String,Object> getallUser(){
-		UserVO vo=new UserVO();
-		List<UserVO> user=null;
-		Map<String, Object> res=new HashMap();
-		try {
-		user=dao.selectUser(vo);
-		}catch(Exception ex) {//에러가 발생할 경우
-			res.put("status", "not OK");
-			res.put("message",ex.getMessage());
-			return res;
-		}
-		res.put("status", "OK");
-		res.put("data", user);
-		return res;
-	}
-	
 	//유저정보 ID로 가져오기
 	@ResponseBody
 	@RequestMapping(value="/User/getUserByID",method= RequestMethod.POST)
@@ -218,11 +199,11 @@ public class UserController {
 			return res;
 		}
 		//////////////////insert tempPlants
-		String filePath="/home/centos/resource/img/";//centos에서 저장해야하는 장소
-		String savePath="http://52.14.219.87:8080/Img/Plants/";
+		//String filePath="/home/centos/resource/img/";//centos에서 저장해야하는 장소
+		//String savePath="http://52.14.219.87:8080/Img/Plants/";
 		
-		  //String filePath="C:/spring_workspace/imagetest/"; 
-		  //String savePath="http://localhost:8080/Test/";
+		  String filePath="C:/spring_workspace/imagetest/"; 
+		  String savePath="http://localhost:8080/Test/";
 		 
 		
 		//도감 추가하기
@@ -237,6 +218,7 @@ public class UserController {
 				@RequestParam(name = "fsGbn") String fsGbn,
 				@RequestParam(name = "fsClassname") String fsClassname,
 				@RequestParam(name = "isHerb") Integer isHerb,
+				@RequestParam(name = "isPV", required=false) Integer isPV,
 				@RequestPart(value="file", required = true) final MultipartFile images)throws Exception{
 			System.out.println("Controller start");
 			Map<String, String> res=new HashMap();
@@ -295,6 +277,12 @@ public class UserController {
 					fsClassname,
 					isHerb.intValue()
 					);
+			//System.out.println(isPV);
+			if(isPV!=null) {
+				vo.setIsPV(isPV);
+			}else {
+				vo.setIsPV(1);//default는 1
+			}
 			try {
 				dao.insertTempPlants(vo);
 			}catch(Exception ex) {
@@ -323,6 +311,7 @@ public class UserController {
 				@RequestParam(name = "fsClassname") String fsClassname,
 				@RequestParam(name = "isHerb") Integer isHerb,
 				@RequestParam(name = "changedpic") Integer changedpic,//1이면 바뀐거고 0이면 안바뀐것
+				@RequestParam(name = "isPV", required = false) Integer isPV,//isPV가 오지 않는다면 처리해야함
 				@RequestPart(value="file", required = true) final MultipartFile images)throws Exception{
 			System.out.println("Controller start");
 			Map<String, String> res=new HashMap();
@@ -335,8 +324,12 @@ public class UserController {
 			vo.setFsGbn(fsGbn);
 			vo.setFskName(fskName);
 			vo.setIsHerb(isHerb);
+			if(isPV!=null) {
+				vo.setIsPV(isPV);
+			}else {
+				vo.setIsPV(1);//default는 1
+			}
 			
-			System.out.println(vo.getFsLifeTime());
 			
 			TempPlantsVO old=dao.selectoneTempPlants(vo);
 			String fname=old.getFsImg_1();
@@ -403,7 +396,26 @@ public class UserController {
 			res.put("status", "OK");
 			res.put("data", TPlants);
 			return res;
-		}	
+		}
+		
+		//게시판의 모든 Plants들을 가져오기
+		@ResponseBody
+		@RequestMapping(value="/TempPlants/getALLTempPlants",method= RequestMethod.GET)
+		public Map<String,Object> getALLTempPlants(){
+			System.out.println("select TempPlants Controller까지 됨");
+			List<TempPlantsVO> TPlants=null;
+			Map<String, Object> res=new HashMap();
+			try {
+			TPlants=dao.selectALLTempPlants();
+			}catch(Exception ex) {//에러가 발생할 경우
+				res.put("status", "not OK");
+				res.put("message",ex.getMessage());
+				return res;
+			}
+			res.put("status", "OK");
+			res.put("data", TPlants);
+			return res;
+		}
 		
 		//UID로 TPlants 가져오기
 		@ResponseBody
