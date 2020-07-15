@@ -47,7 +47,7 @@
 		#{fsClassname},
 		#{isHerb},
 		#{isPV},
-		date_format(NOW(),'%Y-%m-%d %H:%i:%s')
+		date_add(date_format(NOW(),'%Y-%m-%d %H:%i:%s'),INTERVAL 9 HOUR)
 		);
 	</insert>
 	<!-- delete TempPlants로 삭제하기 -->
@@ -86,7 +86,9 @@
     
     	<!-- 공개된 TempPlants들을 찾기 -->
     <select id="selectALLTempPlants" resultType= "kr.co.beautifour.domain.TempPlantsVO">
-        select * from TempPlants where isPV=0;
+        select 
+        *
+        from TempPlants where isPV=0;
     </select>
     
     	<!-- UID로 TempPlants 찾기 -->
