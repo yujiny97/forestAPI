@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import kr.co.beautifour.dao.UserDao;
+import kr.co.beautifour.domain.CommentVO;
 import kr.co.beautifour.domain.MybookVO;
 import kr.co.beautifour.domain.TempPlantsVO;
 import kr.co.beautifour.domain.UserVO;
@@ -37,7 +38,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/User/getUserByID",method= RequestMethod.POST)
 	public Map<String,Object> getUserByID(@RequestBody Map<String, Object> param){
-		System.out.println("Controller까지 됨");
+		////System.out.println("Controller까지 됨");
 		UserVO vo=new UserVO();
 		vo.setUID((String)(param.get("uid")));
 		List<UserVO> user=null;
@@ -59,7 +60,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/User/UserValid",method= RequestMethod.POST)
 	public Map<String,Object> Uservalid(@RequestBody Map<String, Object> param){
-		System.out.println("Controller까지 됨");
+		////System.out.println("Controller까지 됨");
 		UserVO vo=new UserVO();
 		vo.setUID((String)(param.get("uid")));
 		vo.setPW((String)(param.get("pw")));
@@ -105,14 +106,14 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/Mybook/Insertbook",method=RequestMethod.POST)
 	public Map<String,String> insertMybook(@RequestBody Map<String,Object> p){
-		System.out.println("Controller start");
+		////System.out.println("Controller start");
 		MybookVO vo=new MybookVO(
 				(String)p.get("uid"),
 				(String)p.get("story"),
 				(String)p.get("pic"),
 				(String)p.get("forT")
 				);
-		System.out.println("Controller");
+		////System.out.println("Controller");
 		Map<String, String> res=new HashMap();
 		
 		try {
@@ -123,7 +124,7 @@ public class UserController {
 			res.put("Exception", ex.getMessage());
 			return res;
 		}
-		System.out.println("Controller finished");
+		////System.out.println("Controller finished");
 		res.put("status", "OK");
 		return res;
 	}
@@ -131,10 +132,10 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/Mybook/getMybooklist",method=RequestMethod.POST)
 		public Map<String,Object> getMybooklist(@RequestBody Map<String,Object> p){
-			System.out.println("Controller start");
+			////System.out.println("Controller start");
 			MybookVO vo=new MybookVO();
 			vo.setUid((String)p.get("uid"));
-			System.out.println("Controller");
+			////System.out.println("Controller");
 			Map<String, Object> res=new HashMap();
 			List<MybookVO> mybook=null;
 			try {
@@ -145,7 +146,7 @@ public class UserController {
 				res.put("Exception", ex.getMessage());
 				return res;
 			}
-			System.out.println("Controller finished");
+			////System.out.println("Controller finished");
 			res.put("data", mybook);
 			res.put("status", "OK");
 			
@@ -155,11 +156,11 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/Mybook/deleteMybookbyID",method=RequestMethod.DELETE)
 		public Map<String,String> deleteMybookbyID(@RequestBody Map<String,Object> p){
-			System.out.println("Controller start");
+			////System.out.println("Controller start");
 			MybookVO vo=new MybookVO();
 			vo.setBookid(((Integer)p.get("bookid")).intValue());
 			vo.setUid((String)p.get("uid"));
-			System.out.println("Controller");
+			////System.out.println("Controller");
 			Map<String, String> res=new HashMap();
 			try {
 				dao.deleteMybookbyID(vo);
@@ -169,7 +170,7 @@ public class UserController {
 				res.put("Exception", ex.getMessage());
 				return res;
 			}
-			System.out.println("Controller finished");
+			////System.out.println("Controller finished");
 			res.put("status", "OK");
 			return res;
 		}
@@ -178,13 +179,13 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/Mybook/UpdatebookbyID",method=RequestMethod.PUT)
 		public Map<String,String> updateMybookbyID(@RequestBody Map<String,Object> p){
-			System.out.println("Controller start");
+			////System.out.println("Controller start");
 			MybookVO vo=new MybookVO();
 			vo.setBookid(((Integer)p.get("bookid")).intValue());
 			vo.setUid((String)p.get("uid"));
 			vo.setUid((String)p.get("story"));
 			vo.setUid((String)p.get("picadd"));
-			System.out.println("Controller");
+			////System.out.println("Controller");
 			Map<String, String> res=new HashMap();
 			try {
 				dao.updateMybookbyID(vo);
@@ -194,7 +195,7 @@ public class UserController {
 				res.put("Exception", ex.getMessage());
 				return res;
 			}
-			System.out.println("Controller finished");
+			////System.out.println("Controller finished");
 			res.put("status", "OK");
 			return res;
 		}
@@ -220,7 +221,7 @@ public class UserController {
 				@RequestParam(name = "isHerb") Integer isHerb,
 				@RequestParam(name = "isPV", required=false) Integer isPV,
 				@RequestPart(value="file", required = true) final MultipartFile images)throws Exception{
-			System.out.println("Controller start");
+			////System.out.println("Controller start");
 			Map<String, String> res=new HashMap();
 			
 			//이미 존재하는지 확인한다.
@@ -250,7 +251,7 @@ public class UserController {
 			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
 			File file = new File(filePath + storedFileName);
 			//저장 경로를 vo의 파일 이름으로 넣는다.
-			System.out.println("Controller");
+			////System.out.println("Controller");
 			
 			try {
 				images.transferTo(file);
@@ -277,7 +278,7 @@ public class UserController {
 					fsClassname,
 					isHerb.intValue()
 					);
-			//System.out.println(isPV);
+			////System.out.println(isPV);
 			if(isPV!=null) {
 				vo.setIsPV(isPV);
 			}else {
@@ -291,7 +292,7 @@ public class UserController {
 				res.put("Exception", ex.getMessage());
 				return res;
 			}
-			System.out.println("Controller finished");
+			////System.out.println("Controller finished");
 			res.put("status", "OK");
 			return res;
 		}
@@ -313,7 +314,7 @@ public class UserController {
 				@RequestParam(name = "changedpic") Integer changedpic,//1이면 바뀐거고 0이면 안바뀐것
 				@RequestParam(name = "isPV", required = false) Integer isPV,//isPV가 오지 않는다면 처리해야함
 				@RequestPart(value="file", required = true) final MultipartFile images)throws Exception{
-			System.out.println("Controller start");
+			////System.out.println("Controller start");
 			Map<String, String> res=new HashMap();
 			TempPlantsVO vo=new TempPlantsVO();
 			vo.setUid(uid);
@@ -335,13 +336,13 @@ public class UserController {
 			String fname=old.getFsImg_1();
 			String orgFileExtension=fname.substring(fname.lastIndexOf("."));//확장자 가져오기
 			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-			System.out.println("file name:"+ storedFileName);
+			////System.out.println("file name:"+ storedFileName);
 			
 			
 			String[] lst=fname.split("/");
 			fname=savePath+lst[lst.length-1];//이름은 이전꺼랑 똑같이 가져오기
 			File file = new File(filePath+lst[lst.length-1]);
-			System.out.println(filePath+lst[lst.length-1]);
+			////System.out.println(filePath+lst[lst.length-1]);
 			file.delete();
 			//savePath+storedFileName
 			vo.setFsImg_1(savePath+storedFileName);
@@ -372,7 +373,7 @@ public class UserController {
 				res.put("Exception", ex.getMessage());
 				return res;
 			}
-			System.out.println("Controller finished");
+			////System.out.println("Controller finished");
 			res.put("status", "OK");
 			return res;
 		}
@@ -381,7 +382,7 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/TempPlants/getTempPlants",method= RequestMethod.POST)
 		public Map<String,Object> getTempPlants(@RequestBody Map<String, Object> param){
-			System.out.println("select TempPlants Controller까지 됨");
+			////System.out.println("select TempPlants Controller까지 됨");
 			TempPlantsVO vo=new TempPlantsVO();
 			vo.setUid((String)param.get("uid"));
 			List<TempPlantsVO> TPlants=null;
@@ -402,7 +403,7 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/TempPlants/getALLTempPlants",method= RequestMethod.GET)
 		public Map<String,Object> getALLTempPlants(){
-			System.out.println("select TempPlants Controller까지 됨");
+			////System.out.println("select TempPlants Controller까지 됨");
 			List<TempPlantsVO> TPlants=null;
 			Map<String, Object> res=new HashMap();
 			try {
@@ -421,7 +422,7 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/TempPlants/getoneTempPlants",method= RequestMethod.POST)
 		public Map<String,Object> getOneTempPlants(@RequestBody Map<String, Object> param){
-			System.out.println("select TempPlants Controller까지 됨");
+			////System.out.println("select TempPlants Controller까지 됨");
 			TempPlantsVO vo=new TempPlantsVO();
 			vo.setUid((String)param.get("uid"));
 			vo.setBid(((Integer)param.get("bid")).intValue());
@@ -443,11 +444,11 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/TempPlants/deleteTempPlants",method=RequestMethod.DELETE)
 		public Map<String,String> deleteTempPlantsByID(@RequestBody Map<String,Object> p){
-			System.out.println("Controller start");
+			////System.out.println("Controller start");
 			TempPlantsVO vo=new TempPlantsVO();
 			vo.setBid(((Integer)p.get("bid")).intValue());
 			vo.setUid((String)p.get("uid"));
-			System.out.println("Controller");
+			////System.out.println("Controller");
 			Map<String, String> res=new HashMap();
 			try {
 				TempPlantsVO old=dao.selectoneTempPlants(vo);
@@ -464,7 +465,7 @@ public class UserController {
 				return res;
 			}
 			
-			System.out.println("Controller finished");
+			////System.out.println("Controller finished");
 			res.put("status", "OK");
 			return res;
 		}
@@ -472,10 +473,10 @@ public class UserController {
 		@ResponseBody
 		@RequestMapping(value="/TempPlants/deleteallTempPlants",method=RequestMethod.DELETE)
 		public Map<String,String> deleteallTempPlantsByID(@RequestBody Map<String,Object> p){
-			System.out.println("Controller start");
+			////System.out.println("Controller start");
 			TempPlantsVO vo=new TempPlantsVO();
 			vo.setUid((String)p.get("uid"));
-			System.out.println("Controller");
+			////System.out.println("Controller");
 			Map<String, String> res=new HashMap();
 			try {
 				List<TempPlantsVO> all=dao.selectTempPlants(vo);
@@ -493,7 +494,140 @@ public class UserController {
 				res.put("Exception", ex.getMessage());
 				return res;
 			}
-			System.out.println("Controller finished");
+			////System.out.println("Controller finished");
+			res.put("status", "OK");
+			return res;
+		}
+		
+		/////////////////////////////comments
+		//UID,bid,cid로 comment 하나만 가져오기
+		@ResponseBody
+		@RequestMapping(value="/TempPlants/getoneComments",method= RequestMethod.POST)
+		public Map<String,Object> getoneComments(@RequestBody Map<String, Object> param){
+			//System.out.println("select getComments Controller까지 됨");
+			CommentVO vo=new CommentVO();
+			vo.setUid((String)param.get("uid"));
+			vo.setBid(((Integer)param.get("bid")).intValue());
+			vo.setCid(((Integer)param.get("cid")).intValue());
+			CommentVO comments=null;
+			Map<String, Object> res=new HashMap();
+			try {
+				comments=dao.selectoneComment(vo);
+			}catch(Exception ex) {//에러가 발생할 경우
+				res.put("status", "not OK");
+				res.put("message",ex.getMessage());
+				return res;
+			}
+			res.put("status", "OK");
+			res.put("data", comments);
+			return res;
+		}
+		
+		//UID와 bid로 tempPlants에 대한 comments들 가져오기
+		@ResponseBody
+		@RequestMapping(value="/TempPlants/getComments",method= RequestMethod.POST)
+		public Map<String,Object> getALLComments(@RequestBody Map<String, Object> param){
+			//System.out.println("select getComments Controller까지 됨");
+			CommentVO vo=new CommentVO();
+			vo.setUid((String)param.get("uid"));
+			vo.setBid(((Integer)param.get("bid")).intValue());
+			List<CommentVO> comments=null;
+			Map<String, Object> res=new HashMap();
+			try {
+				comments=dao.selectALLComments(vo);
+			}catch(Exception ex) {//에러가 발생할 경우
+				res.put("status", "not OK");
+				res.put("message",ex.getMessage());
+				return res;
+			}
+			res.put("status", "OK");
+			res.put("data", comments);
+			return res;
+		}
+		
+		//comment 달기
+		@ResponseBody
+		@RequestMapping(value="/TempPlants/Comment",method= RequestMethod.POST)
+		public Map<String,Object> insertComment(@RequestBody Map<String, Object> param){
+			//System.out.println("select getComments Controller까지 됨");
+			CommentVO vo=new CommentVO();
+			vo.setUid((String)param.get("uid"));
+			vo.setBid(((Integer)param.get("bid")).intValue());
+			vo.setDetail((String)param.get("detail"));
+			vo.setCmuid((String)param.get("cmuid"));
+			Map<String, Object> res=new HashMap();
+			try {
+				dao.insertComments(vo);
+			}catch(Exception ex) {//에러가 발생할 경우
+				res.put("status", "not OK");
+				res.put("message",ex.getMessage());
+				return res;
+			}
+			res.put("status", "OK");
+			return res;
+		}
+		
+		//comment 수정하기
+		@ResponseBody
+		@RequestMapping(value="/TempPlants/Comment",method= RequestMethod.PUT)
+		public Map<String,Object> updateComment(@RequestBody Map<String, Object> param){
+			//System.out.println("select getComments Controller까지 됨");
+			CommentVO vo=new CommentVO();
+			vo.setCid(((Integer)param.get("cid")).intValue());
+			vo.setUid((String)param.get("uid"));
+			vo.setBid(((Integer)param.get("bid")).intValue());
+			vo.setDetail((String)param.get("detail"));
+			vo.setCmuid((String)param.get("cmuid"));
+			Map<String, Object> res=new HashMap();
+			try {
+				dao.updateComments(vo);
+			}catch(Exception ex) {//에러가 발생할 경우
+				res.put("status", "not OK");
+				res.put("message",ex.getMessage());
+				return res;
+			}
+			res.put("status", "OK");
+			return res;
+		}
+		
+		//comment 하나만 삭제하기
+		@ResponseBody
+		@RequestMapping(value="/TempPlants/Comment",method= RequestMethod.DELETE)
+		public Map<String,Object> deleteComment(@RequestBody Map<String, Object> param){
+			//System.out.println("select getComments Controller까지 됨");
+			CommentVO vo=new CommentVO();
+			vo.setCid(((Integer)param.get("cid")).intValue());
+			vo.setUid((String)param.get("uid"));
+			vo.setBid(((Integer)param.get("bid")).intValue());
+			vo.setCmuid((String)param.get("cmuid"));
+			Map<String, Object> res=new HashMap();
+			try {
+				dao.deleteoneComments(vo);
+			}catch(Exception ex) {//에러가 발생할 경우
+				res.put("status", "not OK");
+				res.put("message",ex.getMessage());
+				return res;
+			}
+			res.put("status", "OK");
+			return res;
+		}
+		
+		//comment 하나만 삭제하기
+		@ResponseBody
+		@RequestMapping(value="/TempPlants/AllCommentDel",method= RequestMethod.DELETE)
+		public Map<String,Object> deleteallComment(@RequestBody Map<String, Object> param){
+			//System.out.println("select getComments Controller까지 됨");
+			CommentVO vo=new CommentVO();
+			vo.setUid((String)param.get("uid"));
+			vo.setBid(((Integer)param.get("bid")).intValue());
+			Map<String, Object> res=new HashMap();
+			try {
+				dao.deleteAllComments(vo);
+			}catch(Exception ex) {//에러가 발생할 경우
+				res.put("status", "not OK");
+				res.put("message",ex.getMessage());
+				return res;
+			}
 			res.put("status", "OK");
 			return res;
 		}

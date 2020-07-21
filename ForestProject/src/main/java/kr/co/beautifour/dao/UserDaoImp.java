@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import kr.co.beautifour.domain.CommentVO;
 import kr.co.beautifour.domain.MybookVO;
 import kr.co.beautifour.domain.TempPlantsVO;
 import kr.co.beautifour.domain.UserVO;
@@ -131,7 +132,55 @@ public class UserDaoImp implements UserDao{
 		return sqlSession.selectList(namespace+".selectALLTempPlants");
 		
 	}
-
+	
+	
+	//해당하는 게시판 글에 대한 comment를 가져온다
+	@Override
+	public List<CommentVO> selectALLComments(CommentVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("selectALLComment까지 됨");
+		return sqlSession.selectList(namespace+".selectallComments",vo);
+		
+	}
+	
+	@Override
+	public CommentVO selectoneComment(CommentVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("selectoneComment");
+		return sqlSession.selectOne(namespace+".selectoneComment",vo);
+		
+	}
+	
+	@Override
+	public void insertComments(CommentVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("insertComments OK");
+		sqlSession.insert(namespace+".insertComments", vo);
+	}
+	
+	@Override
+	public void updateComments(CommentVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("updateTempPlants까지 됨");
+		sqlSession.update(namespace+".updateComments",vo);
+		
+	}
+	
+	@Override
+	public void deleteoneComments(CommentVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("deleteoneComments까지 됨");
+		sqlSession.delete(namespace+".deleteoneComments",vo);
+		
+	}
+	
+	@Override
+	public void deleteAllComments(CommentVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("deleteallComments까지 됨");
+		sqlSession.delete(namespace+".deleteallComments",vo);
+		
+	}
 
 	
 }

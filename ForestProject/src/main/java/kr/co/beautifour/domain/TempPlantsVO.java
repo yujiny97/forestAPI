@@ -1,7 +1,6 @@
 package kr.co.beautifour.domain;
 
 public class TempPlantsVO {
-
 	private int bid;
 	private String uid;
 	private String fskName;

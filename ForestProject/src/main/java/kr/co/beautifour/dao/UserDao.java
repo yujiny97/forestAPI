@@ -2,6 +2,7 @@ package kr.co.beautifour.dao;
 
 import java.util.List;
 
+import kr.co.beautifour.domain.CommentVO;
 import kr.co.beautifour.domain.MybookVO;
 import kr.co.beautifour.domain.TempPlantsVO;
 import kr.co.beautifour.domain.UserVO;
@@ -22,4 +23,10 @@ public interface UserDao {
 	public void deleteAllTempPlants(TempPlantsVO vo) throws Exception;
 	public int selectonePlants(TempPlantsVO vo) throws Exception;
 	public List<TempPlantsVO> selectALLTempPlants() throws Exception;
+	public List<CommentVO> selectALLComments(CommentVO vo) throws Exception;
+	public CommentVO selectoneComment(CommentVO vo) throws Exception;
+	public void insertComments(CommentVO vo) throws Exception;
+	public void updateComments(CommentVO vo) throws Exception;
+	public void deleteoneComments(CommentVO vo) throws Exception;
+	public void deleteAllComments(CommentVO vo) throws Exception;
 }
