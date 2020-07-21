@@ -449,6 +449,9 @@ public class UserController {
 			vo.setBid(((Integer)p.get("bid")).intValue());
 			vo.setUid((String)p.get("uid"));
 			////System.out.println("Controller");
+			CommentVO vo2=new CommentVO();
+			vo2.setUid(vo.getUid());
+			vo2.setBid(vo.getBid());
 			Map<String, String> res=new HashMap();
 			try {
 				TempPlantsVO old=dao.selectoneTempPlants(vo);
@@ -457,6 +460,7 @@ public class UserController {
 				fname=filePath+lst[lst.length-1];
 				File file = new File(fname);
 				dao.deleteTempPlantsByID(vo);
+				dao.deleteAllComments(vo2);//도감관련 댓글 다 삭제
 				file.delete();
 			}catch(Exception ex) {
 				System.out.println(ex);
@@ -482,6 +486,11 @@ public class UserController {
 				List<TempPlantsVO> all=dao.selectTempPlants(vo);
 				dao.deleteAllTempPlants(vo);
 				for(TempPlantsVO v: all) {
+					CommentVO vo2=new CommentVO();
+					vo2.setUid(v.getUid());
+					vo2.setBid(v.getBid());
+					dao.deleteAllComments(vo2);//도감관련 댓글 다 삭제
+					
 					String fname=v.getFsImg_1();
 					String[] lst=fname.split("/");
 					fname=filePath+lst[lst.length-1];
@@ -612,7 +621,7 @@ public class UserController {
 			return res;
 		}
 		
-		//comment 하나만 삭제하기
+		//comment 전체 삭제하기
 		@ResponseBody
 		@RequestMapping(value="/TempPlants/AllCommentDel",method= RequestMethod.DELETE)
 		public Map<String,Object> deleteallComment(@RequestBody Map<String, Object> param){
