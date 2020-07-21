@@ -46,6 +46,20 @@ public class PlantsController {
     	List<PlantsVO> result =  dao.selectAllPlants();    
         return result;
     }
+  //占쏙옙체 占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙占쌍깍옙
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getAllPlantsByMok", method = RequestMethod.GET)
+    public List<PlantsVO> getAllPlantsByMok(){  
+    	List<PlantsVO> result =  dao.selectAllPlantsByMok();    
+        return result;  
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/PlantInfo/getAllPlantsByCho", method = RequestMethod.GET)
+    public List<PlantsVO> getAllPlantsByCho(){  
+    	List<PlantsVO> result =  dao.selectAllPlantsByCho();    
+        return result;  
+    }
     
   //占싼곤옙占쏙옙 占식뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙占쌍깍옙 - pNum占쏙옙占쏙옙 占쏙옙占쏙옙
     @ResponseBody

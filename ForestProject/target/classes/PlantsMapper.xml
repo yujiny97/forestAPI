@@ -21,6 +21,20 @@
 		Livein.hid = Habitat.hid
 	</select>
 
+	<select id="selectAllPlantsByMok"
+		resultType="kr.co.beautifour.domain.PlantsVO">
+		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1, fsImg_2, fsGbn, fsClassname, isHerb, s_Month, Season, hName 
+		FROM Plants natural join s_When natural join Season natural join Livein natural join Habitat 
+		WHERE fsGbn="목본류" and s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month and Plants.pNum = Livein.pNum and Livein.hid = Habitat.hid
+	</select>
+	
+	<select id="selectAllPlantsByCho"
+		resultType="kr.co.beautifour.domain.PlantsVO">
+		SELECT pNum, fskName, fseName, fsLifeTime, fsImg_1, fsImg_2, fsGbn, fsClassname, isHerb, s_Month, Season, hName 
+		FROM Plants natural join s_When natural join Season natural join Livein natural join Habitat 
+		WHERE fsGbn="초본류" and s_When.pNum = Plants.pNum and Season.s_Month = s_When.s_Month and Plants.pNum = Livein.pNum and Livein.hid = Habitat.hid
+	</select>
+	
 	<select id="selectAllPlants"
 		resultType="kr.co.beautifour.domain.PlantsVO">
 		SELECT pNum, fskName, fsImg_1 FROM Plants

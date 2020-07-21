@@ -10,4 +10,6 @@ public interface PlantsDao {
 	public List<PlantsVO> selectAllPlantsInfo();
 	public List<PlantsVO> selectsearchPlants(String search);
 	public void deleteDisease(String uid, String dname) throws Exception;
+	public List<PlantsVO> selectAllPlantsByMok();
+	public List<PlantsVO> selectAllPlantsByCho();
 }

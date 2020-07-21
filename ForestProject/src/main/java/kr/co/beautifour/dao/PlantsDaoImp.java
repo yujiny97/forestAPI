@@ -45,7 +45,15 @@ public class PlantsDaoImp implements PlantsDao {
 		sqlSession.selectList(namespace+".deleteDisease", user);
     }
     
+    @Override
+    public List<PlantsVO> selectAllPlantsByMok(){
+        return sqlSession.selectList(namespace+".selectAllPlantsByMok");
+    }
     
+    @Override
+    public List<PlantsVO> selectAllPlantsByCho(){
+        return sqlSession.selectList(namespace+".selectAllPlantsByCho");
+    }
    
 }
 
