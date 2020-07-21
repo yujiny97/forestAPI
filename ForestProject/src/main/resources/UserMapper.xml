@@ -158,4 +158,5 @@
         update MyBook set story=#{story},picadd=#{picadd} where UID=#{uid} and bookid=#{bookid};
     </update>
 
+
 </mapper>
