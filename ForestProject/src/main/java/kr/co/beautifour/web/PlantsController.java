@@ -103,7 +103,8 @@ public class PlantsController {
     	}
          HerbVO result =  hdao.selectHerbs(no);
          List<HerbContVO> result1 = hdao.selectHerbsCountry(no);
-         List<TherapyVO> result2 = hdao.selectTherapy(no); 
+         List<TherapyVO> result2 = hdao.selectTherapy(no);
+         
          for(int i=0;i<result1.size();i++) {
         	 result.setcountry(result1.get(i).getCountry());
          }

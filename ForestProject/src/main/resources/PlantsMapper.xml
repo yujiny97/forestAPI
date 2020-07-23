@@ -62,13 +62,14 @@
 
 	<select id="selectHerbs"
 		resultType="kr.co.beautifour.domain.HerbVO">
-		select HrbID, HrbName, mng, caution, internal, external,
-		fsImg_1, fsImg_2
+		select HrbID, Herb.HrbName, mng, caution, internal, external,
+		fsImg_1, fsImg_2, img1, img2, img3, medicinal
 		from Herb LEFT OUTER join InternalC on
 		Herb.inid=InternalC.inid LEFT
 		OUTER join ExternalC on
 		Herb.exid=ExternalC.exid INNER JOIN Plants ON
-		Plants.pNum=Herb.pNum
+		Plants.pNum=Herb.pNum Inner JOIN HrbImg ON
+        Herb.HrbName=HrbImg.HrbName
 		WHERE HrbId = ${no}
 	</select>
 
