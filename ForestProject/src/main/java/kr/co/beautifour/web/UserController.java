@@ -224,24 +224,6 @@ public class UserController {
 			////System.out.println("Controller start");
 			Map<String, String> res=new HashMap();
 			
-			//이미 존재하는지 확인한다.
-			TempPlantsVO check=new TempPlantsVO();
-			int cnt=0;
-			check.setFskName(fskName);
-			try{
-				cnt=dao.selectonePlants(check);
-			}catch(Exception ex) {
-				System.out.println(ex);
-				res.put("status", "select error");//중복코드
-				res.put("Exception", ex.getMessage());
-				return res;
-			}
-			
-			if(cnt>0) {//이미 존재할때
-				res.put("status", "Already Exist");//중복코드
-				return res;
-			}
-			
 			//파일을 먼저 경로에 저장한다.
 			String orgFile=images.getOriginalFilename();
 			String orgFileExtension=orgFile.substring(orgFile.lastIndexOf("."));//확장자 가져오기
